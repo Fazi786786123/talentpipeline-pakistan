@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TalentPipeline Safe Journey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: sticky navy top bar with role switch, left module nav (tab strip on phones), card-based workspace. Emerald = verified, amber/red = risk. */
+:root{
+  --bg:#f3f6fa;--surface:#ffffff;--surface-2:#eaeff5;--ink:#0d1a2d;--ink-2:#4b5b72;--line:#d9e1ea;
+  --navy:#0a1a31;--navy-2:#102a4c;--on-navy:#e9f0f9;--on-navy-2:#9fb3cc;
+  --emerald:#10b981;--emerald-strong:#059669;--emerald-ink:#047857;--emerald-soft:#d8f5e8;
+  --warn:#9a5b00;--warn-soft:#fdf0cf;--danger:#b42318;--danger-soft:#fde9e7;--info-soft:#e3edfb;--info:#1d4f91;
+  --focus:#0ea5e9;
+  --shadow:0 1px 2px rgba(10,26,49,.06),0 8px 24px rgba(10,26,49,.07);
+  --shadow-lg:0 2px 4px rgba(10,26,49,.08),0 24px 60px rgba(10,26,49,.22);
+  --font-body:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#08121f;--surface:#0f1e33;--surface-2:#16294a;--ink:#e8eff8;--ink-2:#9fb2ca;--line:#22364f;
+    --emerald-ink:#34d399;--emerald-soft:#0e3a2d;--warn:#fbbf24;--warn-soft:#3a2a0a;--danger:#f87171;--danger-soft:#3b1b1e;--info-soft:#13294a;--info:#8fc0ff;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);--shadow-lg:0 24px 60px rgba(0,0,0,.6);color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#08121f;--surface:#0f1e33;--surface-2:#16294a;--ink:#e8eff8;--ink-2:#9fb2ca;--line:#22364f;
+  --emerald-ink:#34d399;--emerald-soft:#0e3a2d;--warn:#fbbf24;--warn-soft:#3a2a0a;--danger:#f87171;--danger-soft:#3b1b1e;--info-soft:#13294a;--info:#8fc0ff;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);--shadow-lg:0 24px 60px rgba(0,0,0,.6);color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.6;margin:0;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--navy)}
+h1,h2,h3,h4{line-height:1.2;margin:0;text-wrap:balance;letter-spacing:-.02em}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:var(--emerald-ink);font-weight:700}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
+.ico{width:1.15em;height:1.15em;flex:none;vertical-align:-.2em}
+.mono{font-family:var(--font-mono)}
+.wrap{max-width:1240px;margin-inline:auto;width:100%;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid transparent;border-radius:10px;padding:10px 16px;font-weight:700;font-size:.92rem;line-height:1.2;text-decoration:none;transition:background .15s,border-color .15s;white-space:nowrap}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--emerald-strong);color:#fff}
+.btn-primary:hover{background:#047857}
+.btn-outline{background:var(--surface);border-color:var(--line);color:var(--ink)}
+.btn-outline:hover{border-color:var(--emerald-strong);color:var(--emerald-ink)}
+.btn-danger{background:var(--danger-soft);color:var(--danger);border-color:transparent}
+.btn-ghost{background:transparent;border-color:rgba(255,255,255,.3);color:var(--on-navy)}
+.btn-ghost:hover{background:rgba(255,255,255,.08)}
+.btn-sm{padding:7px 12px;font-size:.82rem;border-radius:8px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+
+/* top bar */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--navy);border-bottom:1px solid rgba(255,255,255,.08)}
+.top-in{display:flex;align-items:center;gap:16px;min-height:64px;flex-wrap:wrap;padding-block:8px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--on-navy);text-decoration:none;flex:none}
+.brand-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(140deg,var(--emerald),#0e7490);display:grid;place-items:center;color:#04231a}
+.brand-name{font-weight:800;letter-spacing:-.02em;line-height:1.1;font-size:1.02rem}
+.brand-name small{display:block;font-family:var(--font-mono);font-weight:500;font-size:.6rem;letter-spacing:.16em;color:var(--on-navy-2)}
+.roles{display:flex;gap:4px;background:rgba(255,255,255,.07);padding:4px;border-radius:12px;margin-left:auto}
+.roles button{border:0;background:transparent;color:var(--on-navy-2);font-weight:700;font-size:.86rem;padding:8px 14px;border-radius:9px;white-space:nowrap;display:inline-flex;gap:8px;align-items:center}
+.roles button[aria-pressed="true"]{background:var(--emerald-strong);color:#fff}
+.roles .dot{background:#fff;color:var(--danger);font-size:.68rem;font-weight:800;border-radius:99px;padding:0 6px;min-width:18px;text-align:center}
+.demo-pill{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--on-navy-2);border:1px dashed rgba(255,255,255,.3);padding:3px 8px;border-radius:6px}
+@media (max-width:760px){.roles{margin-left:0;order:3;width:100%;overflow-x:auto}.top-in .demo-pill{display:none}.top-in .btn-ghost{margin-left:auto}}
+
+/* shell */
+.shell{display:grid;grid-template-columns:230px minmax(0,1fr);gap:28px;padding-block:28px 64px;align-items:start}
+.side{position:sticky;top:calc(80px + env(safe-area-inset-top,0px));display:grid;gap:4px}
+.side .lbl{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);padding:0 12px 6px}
+.nb{display:flex;align-items:center;gap:10px;border:0;background:transparent;text-align:left;padding:10px 12px;border-radius:10px;font-weight:700;font-size:.92rem;color:var(--ink-2);width:100%}
+.nb:hover{background:var(--surface-2);color:var(--ink)}
+.nb[aria-current="page"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.nb[aria-current="page"] .ico{color:var(--emerald-strong)}
+.nb .n{margin-left:auto;font-family:var(--font-mono);font-size:.72rem;background:var(--danger-soft);color:var(--danger);padding:0 7px;border-radius:99px;font-weight:700}
+@media (max-width:860px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:16px;padding-top:16px}
+  .side{position:static;display:flex;overflow-x:auto;gap:6px;padding-bottom:4px}
+  .side .lbl{display:none}
+  .nb{width:auto;white-space:nowrap;border:1.5px solid var(--line);background:var(--surface)}
+}
+main{min-width:0;display:grid;gap:20px}
+.head{display:grid;gap:6px}
+.head .eyebrow{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--emerald-ink);font-weight:600}
+.head h1{font-size:clamp(1.5rem,3vw,2.1rem);font-weight:800}
+.head p{color:var(--ink-2);max-width:70ch}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:clamp(16px,2.4vw,24px);min-width:0}
+.card h2{font-size:1.1rem;font-weight:800}
+.card .sub{color:var(--ink-2);font-size:.9rem;margin-top:4px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:1020px){.two{grid-template-columns:minmax(0,1fr)}}
+
+/* chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:.74rem;font-weight:800;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.chip.none{background:var(--surface-2);color:var(--ink-2)}
+.chip.submitted{background:var(--info-soft);color:var(--info)}
+.chip.verified,.chip.low{background:var(--emerald-soft);color:var(--emerald-ink)}
+.chip.rejected,.chip.high,.chip.critical{background:var(--danger-soft);color:var(--danger)}
+.chip.medium{background:var(--warn-soft);color:var(--warn)}
+
+/* journey */
+.hero-card{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:center;background:linear-gradient(135deg,var(--navy),var(--navy-2));color:var(--on-navy);border-radius:18px;padding:clamp(18px,3vw,28px);box-shadow:var(--shadow)}
+.hero-card h2{font-size:clamp(1.2rem,2.4vw,1.6rem);font-weight:800;color:#fff}
+.hero-card p{color:var(--on-navy-2);margin-top:6px;font-size:.92rem}
+.bar{height:10px;background:rgba(255,255,255,.14);border-radius:99px;overflow:hidden;margin-top:14px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--emerald-strong),var(--emerald));border-radius:99px;transition:width .4s}
+.pct{font-family:var(--font-mono);font-size:2.4rem;font-weight:600;color:var(--emerald);line-height:1}
+.pct small{display:block;font-size:.7rem;color:var(--on-navy-2);letter-spacing:.1em;text-transform:uppercase;margin-top:6px}
+@media (max-width:560px){.hero-card{grid-template-columns:minmax(0,1fr)}}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.step{display:grid;grid-template-columns:40px minmax(0,1fr);gap:14px;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:16px;min-width:0}
+.step .num{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-family:var(--font-mono);font-weight:600;background:var(--surface-2);color:var(--ink-2)}
+.step.done{border-color:var(--emerald-strong)}
+.step.done .num{background:var(--emerald-strong);color:#fff}
+.step.current{border-color:var(--navy);box-shadow:0 0 0 3px var(--info-soft)}
+.step.current .num{background:var(--navy);color:#fff}
+.step.locked{opacity:.62}
+.step h3{font-size:1.02rem;font-weight:800;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.step p{color:var(--ink-2);font-size:.9rem;margin-top:4px}
+.step .acts{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.selfdecl{display:inline-flex;align-items:center;gap:8px;font-size:.88rem;font-weight:700}
+.selfdecl input{accent-color:var(--emerald-strong);width:18px;height:18px}
+.note{display:flex;gap:10px;align-items:flex-start;background:var(--info-soft);color:var(--info);border-radius:12px;padding:12px 14px;font-size:.86rem;font-weight:600}
+.note.warn{background:var(--warn-soft);color:var(--warn)}
+.note.ok{background:var(--emerald-soft);color:var(--emerald-ink)}
+
+/* forms */
+.field{display:grid;gap:6px;min-width:0}
+.field label{font-weight:700;font-size:.86rem}
+.field input[type=text],.field input[type=url],.field select,.field textarea{width:100%;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-size:.93rem;padding:10px 12px;border-radius:10px;min-width:0}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--emerald-strong);box-shadow:0 0 0 3px var(--emerald-soft)}
+.field input[type=file]{font-size:.84rem;max-width:100%}
+.fgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:560px){.fgrid{grid-template-columns:minmax(0,1fr)}}
+
+/* profile */
+.score{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.score .big{font-family:var(--font-mono);font-size:2.6rem;font-weight:600;line-height:1}
+.score .meter{flex:1 1 180px;height:12px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+.score .meter i{display:block;height:100%;border-radius:99px;background:var(--emerald-strong);transition:width .3s}
+.score .meter i.low{background:var(--danger)}.score .meter i.mid{background:#d99a00}
+.checklist{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px}
+.checklist label{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:11px 13px;background:var(--bg);cursor:pointer}
+.checklist input{accent-color:var(--emerald-strong);width:18px;height:18px;margin-top:3px;flex:none}
+.checklist b{font-size:.92rem;display:block;font-weight:700}
+.checklist span.w{margin-left:auto;font-family:var(--font-mono);font-size:.74rem;color:var(--ink-2);flex:none}
+.checklist label:has(input:checked){border-color:var(--emerald-strong);background:var(--emerald-soft)}
+.gen{display:grid;gap:14px}
+.out-box{border:1px solid var(--line);border-radius:12px;background:var(--bg);overflow:hidden}
+.out-box header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 12px;border-bottom:1px solid var(--line);font-weight:800;font-size:.82rem}
+pre.out{margin:0;padding:12px;white-space:pre-wrap;word-break:break-word;font-family:var(--font-body);font-size:.88rem;color:var(--ink)}
+
+/* offer checker */
+.flags{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:8px}
+.flags label{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:11px 13px;background:var(--bg);cursor:pointer;font-size:.92rem}
+.flags input{accent-color:var(--danger);width:18px;height:18px;margin-top:3px;flex:none}
+.flags label:has(input:checked){border-color:var(--danger);background:var(--danger-soft)}
+.result{border-radius:16px;padding:18px;border:1.5px solid var(--line);display:grid;gap:12px}
+.result.low{background:var(--emerald-soft);border-color:var(--emerald-strong)}
+.result.medium{background:var(--warn-soft);border-color:#d99a00}
+.result.high,.result.critical{background:var(--danger-soft);border-color:var(--danger)}
+.result h3{font-size:1.25rem;font-weight:800}
+.result ul{margin:0;padding-left:20px;display:grid;gap:6px;font-size:.92rem}
+.result .why{color:var(--ink-2);font-size:.84rem}
+
+/* documents and verification rows */
+.rows{display:grid;gap:12px}
+.vrow{border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--surface);display:grid;gap:12px;min-width:0}
+.vrow .top2{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.vrow h3{font-size:1rem;font-weight:800}
+.vrow p{font-size:.88rem;color:var(--ink-2);margin-top:2px}
+.vrow .form-line{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.vrow .form-line .field{flex:1 1 240px}
+.reason{background:var(--danger-soft);color:var(--danger);border-radius:10px;padding:8px 12px;font-size:.86rem;font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.stat b{display:block;font-family:var(--font-mono);font-size:1.6rem;font-weight:600}
+.stat span{font-size:.8rem;color:var(--ink-2);font-weight:700}
+.q-item{border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:10px;background:var(--surface)}
+.q-item .who{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-weight:800}
+.q-item .ev{font-family:var(--font-mono);font-size:.82rem;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;overflow-wrap:anywhere}
+.q-item .guide{font-size:.86rem;color:var(--ink-2)}
+.q-item .acts{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.q-item .acts .field{flex:1 1 220px}
+.empty{border:1.5px dashed var(--line);border-radius:16px;padding:34px 18px;text-align:center;color:var(--ink-2);background:var(--surface)}
+.empty b{display:block;color:var(--ink);font-size:1.05rem;margin-bottom:4px}
+
+/* overview */
+.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.flow>div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;position:relative;min-width:0}
+.flow .k{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;color:var(--emerald-ink);text-transform:uppercase;font-weight:600}
+.flow b{display:block;margin-top:4px;font-size:.98rem}
+.flow span{font-size:.84rem;color:var(--ink-2)}
+@media (max-width:900px){.flow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.flow{grid-template-columns:minmax(0,1fr)}}
+.dd{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:9px}
+.dd li{display:flex;gap:10px;align-items:flex-start;font-size:.92rem}
+.dd li svg{margin-top:4px;flex:none}
+.dd.yes svg{color:var(--emerald-strong)}.dd.no svg{color:var(--danger)}
+
+.toast{position:fixed;left:50%;transform:translate(-50%,20px);bottom:max(20px,env(safe-area-inset-bottom,0px));z-index:200;background:var(--navy);color:#fff;border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:12px 16px;font-size:.88rem;font-weight:600;box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:min(92vw,460px);text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.foot{font-size:.8rem;color:var(--ink-2);padding-top:8px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.2 8.2-8 9-4.8-.8-8-4.5-8-9V6l8-3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8.5 12l2.5 2.5L15.5 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-pipe" viewBox="0 0 24 24"><path d="M4 6h5v5h6v7h5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="6" r="2.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 18h6a3 3 0 000-6h-4a3 3 0 010-6h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 20c.6-4 3.4-6 7-6s6.4 2 7 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4m0 0h11l-2 4 2 4H5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z M14 3v4h4 M9.5 12h5M9.5 16h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-building" viewBox="0 0 24 24"><path d="M5 21V5l9-2v18 M14 9h5v12 M8.5 8h2M8.5 12h2M8.5 16h2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M4 13l2.5-8h11L20 13v6H4z M4 13h5l1 2h4l1-2h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11v5.5M12 7.8v.01" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#overview" id="brand" aria-label="TalentPipeline Safe Journey overview">
+      <span class="brand-mark"><svg class="ico" width="20" height="20"><use href="#i-pipe"/></svg></span>
+      <span class="brand-name">TalentPipeline<small>SAFE JOURNEY</small></span>
+    </a>
+    <a class="btn btn-ghost btn-sm" href="index.html" style="margin-left:8px">&larr; Website</a>
+    <div class="roles" role="group" aria-label="Choose who you are viewing as">
+      <button id="r-candidate" data-role="candidate" aria-pressed="true"><svg class="ico"><use href="#i-user"/></svg>Candidate</button>
+      <button id="r-company" data-role="company" aria-pressed="false"><svg class="ico"><use href="#i-building"/></svg>Company</button>
+      <button id="r-reviewer" data-role="reviewer" aria-pressed="false"><svg class="ico"><use href="#i-shield"/></svg>Reviewer<span class="dot" id="pendDot" hidden>0</span></button>
+    </div>
+    <span class="demo-pill">Demo data</span>
+    <button class="btn btn-ghost btn-sm" id="resetBtn" title="Restore the sample data">Reset demo</button>
+  </div>
+</header>
+
+<div class="wrap shell">
+  <nav class="side" id="side" aria-label="Modules"></nav>
+  <main id="main" tabindex="-1"></main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  "use strict";
+  var $=function(s,r){return (r||document).querySelector(s)};
+  var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  function ic(n,s){s=s||16;return '<svg class="ico" width="'+s+'" height="'+s+'" aria-hidden="true"><use href="#i-'+n+'"/></svg>'}
+  function esc(t){return String(t==null?"":t).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+
+  /* ================= content ================= */
+  var FIELDS=["Web Dev","Flutter Dev","UI/UX","Data","Software Engineering"];
+  var ROLE_TITLE={"Web Dev":"Web Developer","Flutter Dev":"Flutter Mobile Developer","UI/UX":"UI/UX Designer","Data":"Data Analyst","Software Engineering":"Software Engineer"};
+  var WHAT={"Web Dev":"fast, accessible websites and web apps","Flutter Dev":"mobile apps for Android and iOS","UI/UX":"clear interfaces and tested prototypes","Data":"data pipelines and dashboards","Software Engineering":"backend services and full-stack applications"};
+  var REPOS={"Web Dev":"2 or more finished web projects, each with a README and screenshots","Flutter Dev":"2 or more Flutter apps, each with a README, screenshots and setup steps","UI/UX":"2 or more case studies showing problem, process and final screens","Data":"2 or more notebooks or pipelines naming the data source, method and charts","Software Engineering":"2 or more backend or full-stack projects with tests and API docs"};
+  var LIVE={"Web Dev":"A live deployed site anyone can open","Flutter Dev":"An installable build or a short demo video of your best app","UI/UX":"A clickable live prototype link","Data":"A published dashboard or a notebook anyone can run","Software Engineering":"A deployed API or app with a public URL"};
+  function profItems(f){return [
+    {id:"li-head",w:10,t:"LinkedIn headline names your role, 3 skills and that you are open to remote or sponsored roles"},
+    {id:"li-about",w:10,t:"LinkedIn About says what you build, for whom, with one measurable result"},
+    {id:"li-photo",w:5,t:"Clear photo and your real name, matching your CNIC and degree"},
+    {id:"gh-readme",w:15,t:"GitHub profile README introduces you and pins your 4 to 6 best repositories"},
+    {id:"gh-repos",w:15,t:REPOS[f]},
+    {id:"live",w:20,t:LIVE[f]},
+    {id:"commits",w:10,t:"Regular activity over the last 3 months, not one big upload"},
+    {id:"case",w:10,t:"One written case study: the problem, your decisions, the result"},
+    {id:"review",w:5,t:"A mentor or teacher has reviewed your best project in writing"}
+  ]}
+  var DOCS=[
+    {id:"cnic",t:"Identity (CNIC)",d:"Matched to you on a live video check. Do not type your CNIC number into this site.",ph:"Attach a scan, or write: will show original on video",file:true,check:"Face matches the ID on a live video call. Name and date of birth match the degree and passport."},
+    {id:"degree",t:"Degree",d:"Confirmed with the university that issued it.",ph:"Attach the degree scan",file:true,check:"Contact the issuing university's verification office directly. Do not rely on the scan alone."},
+    {id:"github",t:"GitHub ownership",d:"Proves the account is yours.",ph:"https://github.com/your-handle",file:false,check:"Ask the candidate to add a file or pin a repository with a one-time code. Confirm it appears."},
+    {id:"linkedin",t:"LinkedIn match",d:"Name, photo and education match your documents.",ph:"https://www.linkedin.com/in/your-name",file:false,check:"Name, photo, education and dates agree with the CNIC and degree."},
+    {id:"refs",t:"Two references",d:"A teacher, mentor or manager who can confirm your work.",ph:"Names and official emails of two referees",file:false,check:"Contact both from official addresses. Confirm the relationship and dates."}
+  ];
+  var CHECKS=[
+    {id:"reg",t:"Business registration",d:"The company exists on its own country's official registry.",ph:"Registry name and registration number",check:"Look the number up on the official registry. Name, address and status must match."},
+    {id:"domain",t:"Company domain email",d:"A contact on the company's own domain, not a free email address.",ph:"name@yourcompany.com",check:"Send a code to that address. Confirm the domain matches the registered website."},
+    {id:"video",t:"Live video call with a named officer",d:"A real person from the company, on camera.",ph:"Name, job title and preferred time",check:"Hold the call. The person's name and title match the website or registry directors."},
+    {id:"offer",t:"Written job offer",d:"Role, salary, location, hours and visa type in writing.",ph:"Role, salary, location, visa type or 'remote contract'",check:"Offer terms are complete and match the draft contract. No fees mentioned."},
+    {id:"visa",t:"Visa or work route",d:"How the candidate will legally work: sponsorship, or a remote contract.",ph:"Sponsor licence or immigration reference, or: remote contract",check:"Check the sponsorship through the destination country's official channel."},
+    {id:"nofee",t:"No-fee pledge",d:"The company will never ask the candidate for money or hold original documents.",ph:"Type: We agree, signed by [name]",check:"Signed pledge received from the named officer."}
+  ];
+  var FLAGS=[
+    {id:"fee",lv:"critical",t:"They asked me to pay money (visa, processing, medical, security, registration) before I start work",why:"Real employers do not charge candidates. This is the most common fraud pattern."},
+    {id:"passport",lv:"critical",t:"They asked me to hand over my original passport or degree",why:"No legitimate employer or recruiter needs to keep your originals."},
+    {id:"nobeoe",lv:"critical",t:"They told me I can skip Protector or BEOE steps",why:"Skipping official steps can remove your legal protection."},
+    {id:"guarantee",lv:"high",t:"They guarantee a visa or job without a real interview or skills check",why:"Real hiring tests skills. A guaranteed visa is a sales line."},
+    {id:"nowritten",lv:"high",t:"There is no written offer or contract, only calls or voice notes",why:"Without paper you cannot prove the terms later."},
+    {id:"nofind",lv:"high",t:"I cannot find the company online: no website, registry number or office address",why:"A real company leaves a public trail."},
+    {id:"pressure",lv:"high",t:"They pressure me to pay or decide today or lose the seat",why:"Urgency is used to stop you from checking."},
+    {id:"agent",lv:"high",t:"An agent is involved and I have not checked their licence on the BEOE list",why:"Only licensed Overseas Employment Promoters may recruit for overseas jobs."},
+    {id:"mismatch",lv:"high",t:"The contract differs from what was promised (salary, role, hours or location)",why:"Changed terms are a common trap after money is paid."},
+    {id:"channel",lv:"medium",t:"They only use WhatsApp or a free email address, never a company email",why:"A real company can use its own domain."},
+    {id:"toogood",lv:"medium",t:"The salary is far above normal for the role, or no experience is needed",why:"Offers that are too good are used as bait."},
+    {id:"vague",lv:"medium",t:"The job title, tasks or visa type are vague",why:"Vague terms are easy to change later."}
+  ];
+  var ACTIONS={
+    critical:["Do not pay anything and do not send original documents.","Stop contact until you have checked the company yourself.","Report it to the <a href=\"https://www.fia.gov.pk\" target=\"_blank\" rel=\"noopener\">FIA</a> and tell <a href=\"https://beoe.gov.pk\" target=\"_blank\" rel=\"noopener\">BEOE</a>."],
+    high:["Pause. Ask for every missing item in writing.","Verify the company on the Company desk before going further.","If an agent is involved, check the licence on the <a href=\"https://beoe.gov.pk\" target=\"_blank\" rel=\"noopener\">BEOE</a> website."],
+    medium:["Ask for a company-domain email and a written offer.","Check the registration on the company's country registry.","Run this check again after they reply."],
+    low:["No warning signs ticked. This does not prove the offer is safe.","Verify the company's registration, domain and visa route.","Complete the official BEOE steps before you travel."]
+  };
+  var HEAD={critical:"Stop. Very high risk",high:"High risk. Pause now",medium:"Some warning signs",low:"No red flags ticked"};
+
+  /* ================= state ================= */
+  var KEY="tp_safe_journey_v1";
+  function seed(){return{
+    role:"candidate",
+    cand:{name:"Ayesha Malik",field:"Web Dev",skills:"HTML, CSS, JavaScript, React",city:"Lahore",
+      prof:{"li-head":1,"li-photo":1,"gh-readme":1,"gh-repos":1,"commits":1},
+      docs:{cnic:{s:"verified",ev:"Original shown on video call",note:""},degree:{s:"submitted",ev:"degree-scan.pdf",note:""},github:{s:"none",ev:"",note:""},linkedin:{s:"none",ev:"",note:""},refs:{s:"none",ev:"",note:""}},
+      offer:{company:"Northwind Digital Ltd (sample)",risk:"",saved:false,ticks:{}},
+      manual:{contract:false,protector:false,visa:false,travel:false}},
+    comp:{name:"Northwind Digital Ltd (sample)",country:"United Kingdom",
+      checks:{reg:{s:"verified",ev:"Registry no. SAMPLE-0001",note:""},domain:{s:"verified",ev:"hr@northwind.example",note:""},video:{s:"submitted",ev:"Tuesday 3pm UK time, Sam Carter, Engineering Manager",note:""},offer:{s:"none",ev:"",note:""},visa:{s:"none",ev:"",note:""},nofee:{s:"none",ev:"",note:""}}}
+  }}
+  function load(){try{var s=localStorage.getItem(KEY);if(s){var o=JSON.parse(s);if(o&&o.cand&&o.comp)return o}}catch(e){}return seed()}
+  var state=load();
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+
+  /* ================= derived ================= */
+  function profScore(){var s=0;profItems(state.cand.field).forEach(function(i){if(state.cand.prof[i.id])s+=i.w});return s}
+  function docsDone(){return DOCS.every(function(d){return state.cand.docs[d.id].s==="verified"})}
+  function compCount(){return CHECKS.filter(function(c){return state.comp.checks[c.id].s==="verified"}).length}
+  function compStatus(){var n=compCount();if(n===CHECKS.length)return "verified";var any=CHECKS.some(function(c){return state.comp.checks[c.id].s==="submitted"||state.comp.checks[c.id].s==="verified"});return any?"submitted":"none"}
+  function statusLabel(s){return {none:"Not started",submitted:"In review",verified:"Verified",rejected:"Needs fix"}[s]||s}
+  function pending(){
+    var q=[];
+    DOCS.forEach(function(d){var x=state.cand.docs[d.id];if(x.s==="submitted")q.push({type:"doc",id:d.id,kind:"Candidate",who:state.cand.name,item:d.t,ev:x.ev,check:d.check})});
+    CHECKS.forEach(function(c){var x=state.comp.checks[c.id];if(x.s==="submitted")q.push({type:"comp",id:c.id,kind:"Company",who:state.comp.name,item:c.t,ev:x.ev,check:c.check})});
+    return q;
+  }
+  var STEPS=[
+    {t:"Build your proof-of-work",d:"Reach a profile score of 75 or more: GitHub, LinkedIn, a live project and a case study.",go:"profile",label:"Open Profile Optimizer",done:function(){return profScore()>=75}},
+    {t:"Get your documents verified",d:"Identity, degree, GitHub, LinkedIn and two references, each checked by a TalentPipeline reviewer.",go:"documents",label:"Open Documents",done:docsDone},
+    {t:"Employer verified",d:"The company has passed all six checks: registration, domain, video call, written offer, visa route and the no-fee pledge.",go:"company",label:"Open Company desk",done:function(){return compStatus()==="verified"}},
+    {t:"Check the offer for scam signs",d:"Run the offer checker and save a result with no red flags.",go:"offer",label:"Open Offer Checker",done:function(){return state.cand.offer.saved&&state.cand.offer.risk==="low"}},
+    {t:"Sign a written contract directly with the employer",d:"Read every line. Salary, role, location, hours and notice period must match the offer.",manual:"contract",decl:"I signed a written contract directly with the employer"},
+    {t:"Complete the official BEOE protection step",d:"Done by you through the Protector of Emigrants or BEOE's e-Protector, not by TalentPipeline. We tell you what to prepare. Remote work with no relocation may work differently, so confirm with BEOE.",manual:"protector",decl:"I completed the official BEOE step that applies to me",ext:"https://beoe.gov.pk"},
+    {t:"Visa and travel documents",d:"Apply through the official channel of the destination country. Never pay a third party to guarantee a visa.",manual:"visa",decl:"My visa or work authorisation is approved"},
+    {t:"Travel and start work",d:"Keep your own passport. Share the employer's name and contact with your family.",manual:"travel",decl:"I reached the destination and started work"}
+  ];
+  function stepsState(){
+    var out=[],cur=-1;
+    STEPS.forEach(function(s,i){
+      var done=s.manual?!!state.cand.manual[s.manual]:s.done();
+      if(!done&&cur===-1)cur=i;
+      out.push({done:done});
+    });
+    return out.map(function(o,i){return {done:o.done,current:i===cur,locked:cur!==-1&&i>cur}});
+  }
+
+  /* ================= views ================= */
+  var VIEWS=[
+    {id:"overview",label:"How it works",icon:"home",role:"all"},
+    {id:"journey",label:"My Safe Journey",icon:"route",role:"candidate"},
+    {id:"profile",label:"Profile Optimizer",icon:"spark",role:"candidate"},
+    {id:"offer",label:"Offer Checker",icon:"flag",role:"candidate"},
+    {id:"documents",label:"My Documents",icon:"doc",role:"candidate"},
+    {id:"company",label:"Company desk",icon:"building",role:"company"},
+    {id:"queue",label:"Review queue",icon:"inbox",role:"reviewer"}
+  ];
+  var FIRST={candidate:"journey",company:"company",reviewer:"queue"};
+  var view="overview";
+  function viewRole(v){for(var i=0;i<VIEWS.length;i++)if(VIEWS[i].id===v)return VIEWS[i].role;return "all"}
+
+  function head(eyebrow,title,sub){return '<div class="head"><span class="eyebrow">'+esc(eyebrow)+'</span><h1>'+esc(title)+'</h1>'+(sub?'<p>'+esc(sub)+'</p>':'')+'</div>'}
+  function chip(s){return '<span class="chip '+s+'">'+(s==="verified"?ic("check",12):"")+esc(statusLabel(s))+'</span>'}
+
+  function vOverview(){
+    return head("How it works","Train. Verify. Reach abroad safely.","TalentPipeline prepares Pakistani job seekers, verifies both sides of every job, and guides the candidate through the official steps. It never replaces BEOE and never takes money from candidates.")+
+    '<div class="flow">'+
+      '<div><span class="k">Step 1</span><b>Train and build proof</b><span>Skills, GitHub and LinkedIn profile made employer-ready for the chosen field.</span></div>'+
+      '<div><span class="k">Step 2</span><b>Verify the person</b><span>CNIC, degree, account ownership and references checked by a reviewer.</span></div>'+
+      '<div><span class="k">Step 3</span><b>Verify the company</b><span>Registration, domain, video call, written offer, visa route and no-fee pledge.</span></div>'+
+      '<div><span class="k">Step 4</span><b>Guide to the official steps</b><span>Direct contract, then BEOE protection and visa, completed by the candidate.</span></div>'+
+    '</div>'+
+    '<div class="two"><div class="card"><h2>What TalentPipeline does</h2><ul class="dd yes">'+
+      ['Trains people and makes their public profiles employer-ready','Verifies candidate documents and employers before any contact','Warns about scam patterns with an Offer Checker','Shows each candidate a step-by-step Safe Journey','Keeps a written record of every check'].map(function(t){return '<li>'+ic("check",16)+'<span>'+t+'</span></li>'}).join("")+'</ul></div>'+
+    '<div class="card"><h2>What it does not do</h2><ul class="dd no">'+
+      ['Process BEOE or Protector registration for the candidate','Charge candidates any fee','Hold original passports or degrees','Sponsor visas or act as the employer','Promise a job, a visa or a salary'].map(function(t){return '<li>'+ic("x",16)+'<span>'+t+'</span></li>'}).join("")+'</ul></div></div>'+
+    '<div class="card"><h2>Try the full loop in this demo</h2><p class="sub">Switch roles at the top. As a <b>Candidate</b>, submit a document. As a <b>Reviewer</b>, approve it. Watch the Safe Journey update. The <b>Company</b> side works the same way.</p>'+
+    '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px"><button class="btn btn-primary" data-act="goto" data-view="journey">Open the candidate journey '+ic("arrow",16)+'</button><button class="btn btn-outline" data-act="goto" data-view="queue">Open the reviewer queue</button></div></div>'+
+    '<p class="foot">Demo only. Data stays in this browser. Not legal advice: confirm current BEOE rules for your case at <a href="https://beoe.gov.pk" target="_blank" rel="noopener">beoe.gov.pk</a>.</p>';
+  }
+
+  function vJourney(){
+    var ss=stepsState(),done=ss.filter(function(s){return s.done}).length,pct=Math.round(done/STEPS.length*100);
+    var cn=compCount();
+    return head("Candidate","My Safe Journey","Eight steps from training to your first day. A step turns green only when it has really happened.")+
+    '<div class="hero-card"><div><h2>'+esc(state.cand.name)+', you are on step '+(done<STEPS.length?done+1:STEPS.length)+' of '+STEPS.length+'</h2><p>'+(done<STEPS.length?"Next: "+esc(STEPS[ss.map(function(s){return s.current}).indexOf(true)].t):"Journey complete.")+'</p><div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pct+'"><i style="width:'+pct+'%"></i></div></div><div class="pct">'+pct+'%<small>complete</small></div></div>'+
+    '<ol class="steps">'+STEPS.map(function(s,i){
+      var st=ss[i],cls=st.done?"done":st.current?"current":st.locked?"locked":"";
+      var extra="";
+      if(i===2)extra='<p><b>'+esc(state.comp.name)+'</b>: '+cn+' of '+CHECKS.length+' checks verified.</p>';
+      if(i===0)extra='<p>Profile score: <b class="mono">'+profScore()+'/100</b></p>';
+      if(i===1)extra='<p>Documents verified: <b class="mono">'+DOCS.filter(function(d){return state.cand.docs[d.id].s==="verified"}).length+'/'+DOCS.length+'</b></p>';
+      var acts="";
+      if(s.go)acts='<button class="btn btn-outline btn-sm" data-act="goto" data-view="'+s.go+'">'+esc(s.label)+' '+ic("arrow",14)+'</button>';
+      if(s.manual){
+        var en=!st.locked;
+        acts='<label class="selfdecl"><input type="checkbox" id="m-'+s.manual+'" data-bind="cand.manual.'+s.manual+'" '+(state.cand.manual[s.manual]?"checked":"")+' '+(en||st.done?"":"disabled")+'>'+esc(s.decl)+'</label>'+(s.ext?'<a href="'+s.ext+'" target="_blank" rel="noopener">Open beoe.gov.pk</a>':"");
+      }
+      return '<li class="step '+cls+'"><div class="num">'+(st.done?ic("check",18):(i+1))+'</div><div><h3>'+esc(s.t)+(st.done?'<span class="chip verified">'+(s.manual?"Self-declared":"Verified")+'</span>':st.current?'<span class="chip submitted">Current step</span>':st.locked?'<span class="chip none">Locked</span>':'')+'</h3><p>'+esc(s.d)+'</p>'+extra+(acts?'<div class="acts">'+acts+'</div>':"")+'</div></li>';
+    }).join("")+'</ol>'+
+    '<div class="note">'+ic("info",18)+'<span>Steps 5 to 8 are things you do yourself with the employer, BEOE and the embassy. TalentPipeline guides you but does not process them.</span></div>';
+  }
+
+  function genText(){
+    var c=state.cand,sk=c.skills.split(",").map(function(s){return s.trim()}).filter(Boolean),top=sk.slice(0,3).join(", ")||"[your top 3 skills]",
+      first=(c.name||"").split(" ")[0]||"[Your name]",role=ROLE_TITLE[c.field]||c.field,city=c.city||"[your city]",all=sk.join(", ")||"[your skills]";
+    return{
+      head:role+" | "+top+" | Open to remote and sponsored roles",
+      about:"I'm a "+role.toLowerCase()+" based in "+city+". I build "+WHAT[c.field]+" using "+all+".\n\nMy work is public: every project on my GitHub has a README, screenshots and a live demo or short video. One result I'm proud of: [add one measurable result, for example: cut page load from 4s to 1.2s].\n\nI'm looking for a remote or visa-sponsored role with an employer who hires directly and puts the contract in writing.",
+      readme:"# Hi, I'm "+first+"\n"+role+" in "+city+"\n\n**Skills:** "+(sk.join(" · ")||"[your skills]")+"\n\n## Best work\n- [Project 1](link): one line on the problem and the result\n- [Project 2](link): one line on the problem and the result\n\n## Contact\nLinkedIn: [your link]",
+      cs:"# [Project name]\n\n**Problem:** Who had it and why it mattered.\n**My role:** What I built myself.\n**Decisions:** Two choices I made and why.\n**Result:** One number or outcome.\n**Links:** Repository · Live demo"
+    };
+  }
+  function genHTML(){
+    var g=genText();
+    function box(id,t,txt){return '<div class="out-box"><header><span>'+t+'</span><button class="btn btn-outline btn-sm" data-act="copy" data-target="g-'+id+'">Copy</button></header><pre class="out" id="g-'+id+'">'+esc(txt)+'</pre></div>'}
+    return box("head","LinkedIn headline",g.head)+box("about","LinkedIn About draft",g.about)+box("readme","GitHub profile README",g.readme)+box("cs","Case study template",g.cs);
+  }
+  function scoreHTML(){
+    var s=profScore(),lab=s>=75?"Employer-ready":s>=50?"Almost there":"Not ready yet",cls=s>=75?"":s>=50?"mid":"low";
+    return '<div class="score"><div class="big">'+s+'<span style="font-size:1rem;color:var(--ink-2)">/100</span></div><div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+s+'"><i class="'+cls+'" style="width:'+s+'%"></i></div><span class="chip '+(s>=75?"verified":s>=50?"medium":"high")+'">'+lab+'</span></div>';
+  }
+  function vProfile(){
+    var c=state.cand;
+    return head("Candidate","Profile Optimizer","Pick your field. Tick what your public profiles already have. Copy ready-made drafts for LinkedIn and GitHub, then edit them with your real work.")+
+    '<div class="two"><div class="card"><h2>Your details</h2><div class="fgrid" style="margin-top:12px">'+
+      '<div class="field"><label for="cand-name">Name</label><input type="text" id="cand-name" data-bind="cand.name" data-gen="1" value="'+esc(c.name)+'"></div>'+
+      '<div class="field"><label for="cand-city">City</label><input type="text" id="cand-city" data-bind="cand.city" data-gen="1" value="'+esc(c.city)+'"></div>'+
+      '<div class="field"><label for="cand-field">Field</label><select id="cand-field" data-bind="cand.field" data-rerender="1">'+FIELDS.map(function(f){return '<option'+(f===c.field?" selected":"")+'>'+esc(f)+'</option>'}).join("")+'</select></div>'+
+      '<div class="field"><label for="cand-skills">Top skills (comma separated)</label><input type="text" id="cand-skills" data-bind="cand.skills" data-gen="1" value="'+esc(c.skills)+'"></div></div>'+
+      '<div id="scoreBox" style="margin-top:20px">'+scoreHTML()+'</div>'+
+      '<ul class="checklist">'+profItems(c.field).map(function(i){return '<li><label><input type="checkbox" id="prof-'+i.id+'" data-prof="'+i.id+'" '+(c.prof[i.id]?"checked":"")+'><b>'+esc(i.t)+'</b><span class="w">+'+i.w+'</span></label></li>'}).join("")+'</ul></div>'+
+    '<div class="card"><h2>Ready-made drafts</h2><p class="sub">Built from your details. Replace every [bracket] with something true. Employers can tell when a profile is copied.</p><div class="gen" id="genBox" style="margin-top:14px">'+genHTML()+'</div></div></div>'+
+    '<div class="note ok">'+ic("shield",18)+'<span>A profile score of 75 or more completes step 1 of your Safe Journey.</span></div>';
+  }
+
+  function riskOf(ticks){
+    var f=FLAGS.filter(function(x){return ticks[x.id]});
+    var lv=f.some(function(x){return x.lv==="critical"})?"critical":f.some(function(x){return x.lv==="high"})?"high":f.some(function(x){return x.lv==="medium"})?"medium":"low";
+    return{lv:lv,flags:f};
+  }
+  function resultHTML(){
+    var r=riskOf(state.cand.offer.ticks);
+    return '<div class="result '+r.lv+'" aria-live="polite"><div><span class="chip '+r.lv+'">'+r.lv.toUpperCase()+' RISK</span></div><h3>'+HEAD[r.lv]+'</h3>'+
+      (r.flags.length?'<ul>'+r.flags.map(function(f){return '<li><b>'+esc(f.t)+'</b><div class="why">'+esc(f.why)+'</div></li>'}).join("")+'</ul>':'')+
+      '<div><b>What to do now</b><ul style="margin-top:6px">'+ACTIONS[r.lv].map(function(a){return '<li>'+a+'</li>'}).join("")+'</ul></div>'+
+      '<div><button class="btn btn-primary btn-sm" data-act="save-offer">Save this result to my journey</button></div></div>';
+  }
+  function vOffer(){
+    var o=state.cand.offer;
+    return head("Candidate","Offer Checker","Before you pay, travel or send documents, tick everything that is true about the offer or recruiter. The result updates as you tick.")+
+    '<div class="two"><div class="card"><div class="field"><label for="offer-company">Company or recruiter name</label><input type="text" id="offer-company" data-bind="cand.offer.company" value="'+esc(o.company)+'"></div>'+
+      '<p class="sub" style="margin-top:14px">Tick everything that is true:</p><ul class="flags">'+FLAGS.map(function(f){return '<li><label><input type="checkbox" id="flag-'+f.id+'" data-flag="'+f.id+'" '+(o.ticks[f.id]?"checked":"")+'><span>'+esc(f.t)+'</span></label></li>'}).join("")+'</ul></div>'+
+    '<div style="display:grid;gap:14px" id="resBox">'+resultHTML()+'</div></div>'+
+    (o.saved?'<div class="note ok">'+ic("check",18)+'<span>Saved for '+esc(o.company||"this offer")+': '+esc(o.risk)+' risk. Only a result with no red flags completes step 4.</span></div>':"")+
+    '<p class="foot">This checker spots common scam patterns. It cannot prove an offer is genuine. Not legal advice.</p>';
+  }
+
+  function vDocuments(){
+    var verified=DOCS.filter(function(d){return state.cand.docs[d.id].s==="verified"}).length;
+    return head("Candidate","My Documents","Submit each item for review. A TalentPipeline reviewer checks it against the source, and the result shows here.")+
+    '<div class="stats"><div class="stat"><b>'+verified+'/'+DOCS.length+'</b><span>Verified</span></div><div class="stat"><b>'+DOCS.filter(function(d){return state.cand.docs[d.id].s==="submitted"}).length+'</b><span>In review</span></div><div class="stat"><b>'+DOCS.filter(function(d){return state.cand.docs[d.id].s==="rejected"}).length+'</b><span>Need a fix</span></div></div>'+
+    '<div class="rows">'+DOCS.map(function(d){
+      var x=state.cand.docs[d.id],can=x.s==="none"||x.s==="rejected";
+      return '<div class="vrow"><div class="top2"><div><h3>'+esc(d.t)+'</h3><p>'+esc(d.d)+'</p></div>'+chip(x.s)+'</div>'+
+        (x.s==="rejected"?'<div class="reason">Reviewer note: '+esc(x.note)+'</div>':"")+
+        (can?'<div class="form-line"><div class="field"><label for="doc-'+d.id+'">'+(d.file?"File or note":"Link or details")+'</label>'+
+          (d.file?'<input type="file" id="docf-'+d.id+'" data-docfile="'+d.id+'" aria-label="Choose file for '+esc(d.t)+'">':'')+
+          '<input type="text" id="doc-'+d.id+'" data-bind="cand.docs.'+d.id+'.ev" placeholder="'+esc(d.ph)+'" value="'+esc(x.ev)+'"></div><button class="btn btn-primary btn-sm" data-act="submit-doc" data-id="'+d.id+'">Submit for review</button></div>':'<p class="mono" style="font-size:.8rem;overflow-wrap:anywhere">'+esc(x.ev)+'</p>')+
+      '</div>';
+    }).join("")+'</div>'+
+    '<div class="note warn">'+ic("info",18)+'<span>In this demo only the file name is kept, in your browser. In production, files go to encrypted storage and are deleted after verification. Never share your CNIC number or passport photo with anyone who is not the verified platform.</span></div>';
+  }
+
+  function vCompany(){
+    var n=compCount(),st=compStatus();
+    return head("Company","Company desk","Every employer passes six checks before any candidate sees their details. This protects candidates from fake offers and protects honest companies from fake applicants.")+
+    '<div class="card"><div style="display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap"><div><h2>'+esc(state.comp.name)+'</h2><p class="sub">'+n+' of '+CHECKS.length+' checks verified</p></div>'+(st==="verified"?'<span class="chip verified">'+ic("check",12)+'Verified employer</span>':'<span class="chip '+(st==="submitted"?"submitted":"none")+'">'+(st==="submitted"?"Verification in progress":"Not verified yet")+'</span>')+'</div>'+
+      '<div class="bar" style="background:var(--surface-2)"><i style="width:'+Math.round(n/CHECKS.length*100)+'%"></i></div>'+
+      '<div class="fgrid" style="margin-top:16px"><div class="field"><label for="comp-name">Company name</label><input type="text" id="comp-name" data-bind="comp.name" value="'+esc(state.comp.name)+'"></div><div class="field"><label for="comp-country">Country</label><input type="text" id="comp-country" data-bind="comp.country" value="'+esc(state.comp.country)+'"></div></div></div>'+
+    '<div class="rows">'+CHECKS.map(function(c){
+      var x=state.comp.checks[c.id],can=x.s==="none"||x.s==="rejected";
+      return '<div class="vrow"><div class="top2"><div><h3>'+esc(c.t)+'</h3><p>'+esc(c.d)+'</p></div>'+chip(x.s)+'</div>'+
+        (x.s==="rejected"?'<div class="reason">Reviewer note: '+esc(x.note)+'</div>':"")+
+        (can?'<div class="form-line"><div class="field"><label for="chk-'+c.id+'">Evidence</label><input type="text" id="chk-'+c.id+'" data-bind="comp.checks.'+c.id+'.ev" placeholder="'+esc(c.ph)+'" value="'+esc(x.ev)+'"></div><button class="btn btn-primary btn-sm" data-act="submit-chk" data-id="'+c.id+'">Submit for review</button></div>':'<p class="mono" style="font-size:.8rem;overflow-wrap:anywhere">'+esc(x.ev)+'</p>')+'</div>';
+    }).join("")+'</div>'+
+    '<p class="foot">Sample company. Candidates only see a company after all six checks are verified.</p>';
+  }
+
+  function vQueue(){
+    var q=pending();
+    var v=DOCS.filter(function(d){return state.cand.docs[d.id].s==="verified"}).length+compCount();
+    var rj=DOCS.filter(function(d){return state.cand.docs[d.id].s==="rejected"}).length+CHECKS.filter(function(c){return state.comp.checks[c.id].s==="rejected"}).length;
+    return head("TalentPipeline reviewer","Review queue","Every candidate document and company check lands here. Approve only what you have confirmed against the source. Reject with a reason so the person can fix it.")+
+    '<div class="stats"><div class="stat"><b>'+q.length+'</b><span>Waiting for review</span></div><div class="stat"><b>'+v+'</b><span>Verified so far</span></div><div class="stat"><b>'+rj+'</b><span>Sent back</span></div></div>'+
+    (q.length?'<div class="rows">'+q.map(function(it){
+      var rid="rn-"+it.type+"-"+it.id;
+      return '<div class="q-item"><div class="who"><span class="chip '+(it.kind==="Company"?"medium":"submitted")+'">'+it.kind+'</span>'+esc(it.who)+' <span style="color:var(--ink-2);font-weight:600">· '+esc(it.item)+'</span></div>'+
+        '<div class="ev">'+esc(it.ev||"(no evidence added)")+'</div><div class="guide"><b>What to check:</b> '+esc(it.check)+'</div>'+
+        '<div class="acts"><div class="field"><label for="'+rid+'">Reason (needed to reject)</label><input type="text" id="'+rid+'" placeholder="e.g. Name does not match the degree"></div>'+
+        '<button class="btn btn-primary btn-sm" data-act="approve" data-type="'+it.type+'" data-id="'+it.id+'">Approve</button><button class="btn btn-danger btn-sm" data-act="reject" data-type="'+it.type+'" data-id="'+it.id+'">Reject</button></div></div>';
+    }).join("")+'</div>':'<div class="empty"><b>Queue is clear</b>New submissions from candidates and companies appear here.</div>')+
+    '<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center"><button class="btn btn-outline btn-sm" data-act="approve-all"'+(q.length?"":" disabled")+'>Demo helper: approve everything</button><span class="foot" style="padding:0">For the demo only. In production every approval needs a reviewer who has actually checked the source.</span></div>';
+  }
+
+  /* ================= render ================= */
+  function render(){
+    var ae=document.activeElement&&document.activeElement.id;
+    var role=viewRole(view)==="all"?state.role:viewRole(view);
+    if(viewRole(view)!=="all"&&state.role!==viewRole(view)){state.role=viewRole(view);save()}
+    ["candidate","company","reviewer"].forEach(function(r){$("#r-"+r).setAttribute("aria-pressed",state.role===r?"true":"false")});
+    var pc=pending().length,dot=$("#pendDot");dot.hidden=!pc;dot.textContent=pc;
+    var items=VIEWS.filter(function(v){return v.role==="all"||v.role===state.role});
+    $("#side").innerHTML='<div class="lbl">'+({candidate:"Candidate",company:"Company",reviewer:"Reviewer"}[state.role])+' workspace</div>'+items.map(function(v){
+      return '<button class="nb" data-act="goto" data-view="'+v.id+'" '+(v.id===view?'aria-current="page"':"")+'>'+ic(v.icon,18)+esc(v.label)+(v.id==="queue"&&pc?'<span class="n">'+pc+'</span>':"")+'</button>';
+    }).join("");
+    var fn={overview:vOverview,journey:vJourney,profile:vProfile,offer:vOffer,documents:vDocuments,company:vCompany,queue:vQueue}[view]||vOverview;
+    $("#main").innerHTML=fn();
+    if(ae){var n=document.getElementById(ae);if(n&&n.focus)try{n.focus({preventScroll:true})}catch(e){}}
+  }
+  function go(v,scroll){
+    view=v;
+    try{if(location.hash!=="#"+v)history.replaceState(null,"","#"+v)}catch(e){}
+    render();
+    if(scroll!==false)try{window.scrollTo({top:0,behavior:"auto"})}catch(e){}
+  }
+
+  /* ================= actions ================= */
+  var toastEl=$("#toast"),toastT;
+  function toast(m){toastEl.textContent=m;toastEl.classList.add("show");clearTimeout(toastT);toastT=setTimeout(function(){toastEl.classList.remove("show")},3000)}
+  function setPath(p,v){var a=p.split("."),o=state;for(var i=0;i<a.length-1;i++)o=o[a[i]];o[a[a.length-1]]=v}
+  function getPath(p){var a=p.split("."),o=state;for(var i=0;i<a.length;i++)o=o[a[i]];return o}
+  function copyText(node){
+    var t=node.textContent;
+    function sel(){var r=document.createRange();r.selectNodeContents(node);var s=window.getSelection();s.removeAllRanges();s.addRange(r);toast("Selected. Press Ctrl+C to copy.")}
+    try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){toast("Copied")},sel);return}}catch(e){}
+    sel();
+  }
+
+  document.addEventListener("click",function(e){
+    var b=e.target.closest("[data-act]");if(!b)return;
+    var a=b.dataset.act,id=b.dataset.id;
+    if(a==="goto"){e.preventDefault();var vr=viewRole(b.dataset.view);if(vr!=="all")state.role=vr;go(b.dataset.view)}
+    else if(a==="copy"){copyText(document.getElementById(b.dataset.target))}
+    else if(a==="submit-doc"){var d=state.cand.docs[id];if(!String(d.ev).trim()){toast("Add a file name, link or note first.");return}d.s="submitted";d.note="";save();render();toast("Submitted. A reviewer will check it.")}
+    else if(a==="submit-chk"){var c=state.comp.checks[id];if(!String(c.ev).trim()){toast("Add the evidence first.");return}c.s="submitted";c.note="";save();render();toast("Submitted. A reviewer will check it.")}
+    else if(a==="save-offer"){var r=riskOf(state.cand.offer.ticks);state.cand.offer.risk=r.lv;state.cand.offer.saved=true;save();render();toast("Saved: "+r.lv+" risk.")}
+    else if(a==="approve"||a==="reject"){
+      var map=b.dataset.type==="doc"?state.cand.docs:state.comp.checks,x=map[id];
+      if(a==="approve"){x.s="verified";x.note=""}
+      else{var inp=document.getElementById("rn-"+b.dataset.type+"-"+id),why=inp?inp.value.trim():"";if(!why){toast("Write a reason so the person can fix it.");if(inp)inp.focus();return}x.s="rejected";x.note=why}
+      save();render();toast(a==="approve"?"Approved.":"Sent back with your note.");
+    }
+    else if(a==="approve-all"){pending().forEach(function(it){(it.type==="doc"?state.cand.docs:state.comp.checks)[it.id].s="verified"});save();render();toast("Everything approved (demo).")}
+  });
+  document.addEventListener("input",function(e){
+    var t=e.target;
+    if(t.dataset&&t.dataset.bind&&t.type!=="checkbox"&&t.tagName!=="SELECT"){setPath(t.dataset.bind,t.value);save();if(t.dataset.gen){var g=document.getElementById("genBox");if(g)g.innerHTML=genHTML()}}
+  });
+  document.addEventListener("change",function(e){
+    var t=e.target;if(!t||!t.dataset)return;
+    if(t.dataset.prof){state.cand.prof[t.dataset.prof]=t.checked?1:0;save();var sb=document.getElementById("scoreBox");if(sb)sb.innerHTML=scoreHTML()}
+    else if(t.dataset.flag){state.cand.offer.ticks[t.dataset.flag]=t.checked?1:0;if(state.cand.offer.saved){state.cand.offer.saved=false}save();var rb=document.getElementById("resBox");if(rb)rb.innerHTML=resultHTML()}
+    else if(t.dataset.docfile){var f=t.files&&t.files[0];if(f){state.cand.docs[t.dataset.docfile].ev=f.name;var inp=document.getElementById("doc-"+t.dataset.docfile);if(inp)inp.value=f.name;save()}}
+    else if(t.dataset.bind){
+      if(t.type==="checkbox")setPath(t.dataset.bind,t.checked);else setPath(t.dataset.bind,t.value);
+      save();
+      if(t.dataset.rerender||t.type==="checkbox")render();
+    }
+  });
+  $$(".roles button").forEach(function(b){b.addEventListener("click",function(){state.role=b.dataset.role;save();go(FIRST[b.dataset.role])})});
+  $("#resetBtn").addEventListener("click",function(){state=seed();save();go("journey");toast("Demo data restored.")});
+  $("#brand").addEventListener("click",function(e){e.preventDefault();go("overview")});
+  window.addEventListener("hashchange",function(){var h=(location.hash||"").slice(1);if(VIEWS.some(function(v){return v.id===h})&&h!==view){var vr=viewRole(h);if(vr!=="all")state.role=vr;go(h,false)}});
+
+  var h0=(location.hash||"").slice(1);
+  view=VIEWS.some(function(v){return v.id===h0})?h0:"overview";
+  render();
+})();
+</script>
+
+</body>
+</html>

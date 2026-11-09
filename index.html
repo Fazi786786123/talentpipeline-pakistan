@@ -1,0 +1,873 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="TalentPipeline Pakistan: scam-free direct hiring and upskilling for Pakistani developers.">
+<title>TalentPipeline Pakistan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: sticky navy header, navy hero with passport card, light dashboard sections, navy trust band. Emerald is reserved for verification and trust. */
+:root{
+  --bg:#f3f6fa;
+  --surface:#ffffff;
+  --surface-2:#eaeff5;
+  --ink:#0d1a2d;
+  --ink-2:#4b5b72;
+  --line:#d9e1ea;
+  --navy:#0a1a31;
+  --navy-2:#102a4c;
+  --on-navy:#e9f0f9;
+  --on-navy-2:#9fb3cc;
+  --emerald:#10b981;
+  --emerald-strong:#059669;
+  --emerald-ink:#047857;
+  --emerald-soft:#d8f5e8;
+  --danger:#b42318;
+  --danger-soft:#fde9e7;
+  --focus:#0ea5e9;
+  --shadow:0 1px 2px rgba(10,26,49,.06),0 8px 24px rgba(10,26,49,.07);
+  --shadow-lg:0 2px 4px rgba(10,26,49,.08),0 24px 60px rgba(10,26,49,.22);
+  --font-body:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#08121f;--surface:#0f1e33;--surface-2:#16294a;--ink:#e8eff8;--ink-2:#9fb2ca;--line:#22364f;
+    --emerald-ink:#34d399;--emerald-soft:#0e3a2d;--danger:#f87171;--danger-soft:#3b1b1e;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);--shadow-lg:0 24px 60px rgba(0,0,0,.6);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#08121f;--surface:#0f1e33;--surface-2:#16294a;--ink:#e8eff8;--ink-2:#9fb2ca;--line:#22364f;
+  --emerald-ink:#34d399;--emerald-soft:#0e3a2d;--danger:#f87171;--danger-soft:#3b1b1e;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);--shadow-lg:0 24px 60px rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.6;margin:0;-webkit-font-smoothing:antialiased}
+body.lock{overflow:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--navy)}
+h1,h2,h3,h4{line-height:1.15;margin:0;text-wrap:balance;letter-spacing:-.02em}
+p{margin:0}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
+.ico{width:1.15em;height:1.15em;flex:none;vertical-align:-.2em}
+.mono{font-family:var(--font-mono)}
+.wrap{max-width:1200px;margin-inline:auto;width:100%;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+section{scroll-margin-top:76px}
+.eyebrow{font-family:var(--font-mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--emerald-ink);font-weight:600}
+.sec-head{display:grid;gap:12px;max-width:720px;margin-bottom:36px}
+.sec-head h2{font-size:clamp(1.7rem,3.4vw,2.5rem);font-weight:800}
+.sec-head p{color:var(--ink-2);font-size:1.05rem}
+.band{padding-block:clamp(56px,8vw,96px)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid transparent;border-radius:10px;padding:11px 18px;font-weight:700;font-size:.95rem;line-height:1.2;text-decoration:none;transition:transform .15s,background .15s,border-color .15s,box-shadow .15s;white-space:nowrap}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--emerald-strong);color:#fff;box-shadow:0 6px 18px rgba(5,150,105,.32)}
+.btn-primary:hover{background:#047857}
+.btn-ghost{background:transparent;border-color:rgba(255,255,255,.35);color:var(--on-navy)}
+.btn-ghost:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.6)}
+.btn-outline{background:var(--surface);border-color:var(--line);color:var(--ink)}
+.btn-outline:hover{border-color:var(--emerald-strong);color:var(--emerald-ink)}
+.btn-sm{padding:8px 12px;font-size:.85rem;border-radius:8px}
+.btn-lg{padding:14px 22px;font-size:1rem}
+
+/* header */
+.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--navy);border-bottom:1px solid rgba(255,255,255,.08)}
+.nav{display:flex;align-items:center;gap:20px;min-height:68px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--on-navy);flex:none}
+.brand-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(140deg,var(--emerald),#0e7490);display:grid;place-items:center;color:#04231a}
+.brand-name{font-weight:800;letter-spacing:-.02em;font-size:1.05rem;line-height:1.1}
+.brand-name small{display:block;font-family:var(--font-mono);font-weight:500;font-size:.62rem;letter-spacing:.16em;color:var(--on-navy-2)}
+.vbadge{display:inline-flex;align-items:center;gap:5px;font-size:.7rem;font-weight:700;color:#7ff0c3;background:rgba(16,185,129,.14);border:1px solid rgba(52,211,153,.4);padding:3px 9px;border-radius:999px;white-space:nowrap}
+.nav-panel{display:flex;align-items:center;gap:22px;margin-left:auto}
+.nav-links{display:flex;gap:4px}
+.nav-links a{color:var(--on-navy-2);text-decoration:none;font-weight:600;font-size:.92rem;padding:8px 11px;border-radius:8px;white-space:nowrap}
+.nav-links a:hover,.nav-links a.active{color:#fff;background:rgba(255,255,255,.08)}
+.nav-cta{display:flex;gap:10px}
+.menu-btn{display:none;margin-left:auto;background:transparent;border:1.5px solid rgba(255,255,255,.3);border-radius:10px;width:44px;height:44px;place-items:center;color:var(--on-navy)}
+@media (max-width:1140px){
+  .brand .vbadge{display:none}
+  .menu-btn{display:grid}
+  .nav-panel{display:none;position:absolute;left:0;right:0;top:100%;background:var(--navy);border-bottom:1px solid rgba(255,255,255,.1);flex-direction:column;align-items:stretch;gap:14px;padding:16px max(16px,env(safe-area-inset-right,0px)) 20px max(16px,env(safe-area-inset-left,0px));margin:0;box-shadow:0 20px 30px rgba(0,0,0,.35)}
+  .nav-panel.open{display:flex}
+  .nav-links{flex-direction:column}
+  .nav-links a{padding:12px}
+  .nav-cta{flex-direction:column}
+  .nav-cta .btn{width:100%}
+}
+
+/* hero */
+.hero{background:radial-gradient(900px 420px at 85% -10%,rgba(16,185,129,.18),transparent 60%),linear-gradient(180deg,var(--navy),var(--navy-2));color:var(--on-navy);padding-top:clamp(44px,7vw,84px);padding-bottom:0;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(180deg,#000 0,transparent 80%);-webkit-mask-image:linear-gradient(180deg,#000 0,transparent 80%);pointer-events:none}
+.hero .wrap{position:relative;z-index:1}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(28px,5vw,64px);align-items:center}
+.hero h1{font-size:clamp(2.1rem,5.2vw,3.7rem);font-weight:800;letter-spacing:-.03em}
+.hero h1 .hl{color:#5eead4;color:var(--emerald)}
+.hero .lede{margin-top:20px;color:var(--on-navy-2);font-size:1.1rem;max-width:58ch}
+.flow-chips{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:24px}
+.flow-chips .chip{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);padding:8px 12px;border-radius:10px;font-weight:700;font-size:.86rem;color:var(--on-navy)}
+.flow-chips .chip b{font-family:var(--font-mono);color:var(--emerald);font-size:.78rem}
+.flow-chips .sep{color:var(--on-navy-2)}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.passport{background:var(--surface);color:var(--ink);border-radius:18px;box-shadow:var(--shadow-lg);padding:20px;min-width:0}
+.pp-top{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.avatar{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-weight:800;font-size:1rem;background:var(--emerald-soft);color:var(--emerald-ink);flex:none}
+.pp-top h3{font-size:1.02rem}
+.pp-top p{font-size:.82rem;color:var(--ink-2)}
+.pp-tag{margin-left:auto;font-family:var(--font-mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);border:1px dashed var(--line);padding:3px 7px;border-radius:6px;white-space:nowrap}
+.pp-list{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px}
+.pp-list li{display:flex;align-items:center;gap:10px;font-size:.92rem}
+.pp-list .ok{width:22px;height:22px;border-radius:50%;background:var(--emerald-soft);color:var(--emerald-ink);display:grid;place-items:center;flex:none}
+.pp-list .val{margin-left:auto;font-family:var(--font-mono);font-size:.78rem;color:var(--ink-2);text-align:right}
+.pp-score{margin-top:16px;display:flex;align-items:center;gap:12px;background:var(--surface-2);border-radius:12px;padding:12px 14px}
+.pp-score .bar{flex:1;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.pp-score .bar i{display:block;height:100%;width:91%;background:linear-gradient(90deg,var(--emerald-strong),var(--emerald))}
+.pp-score strong{font-family:var(--font-mono);font-size:.95rem}
+.pp-score span{font-size:.78rem;color:var(--ink-2)}
+
+.metrics{margin-top:clamp(36px,5vw,60px);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.12);border-radius:16px 16px 0 0;overflow:hidden}
+.metric{background:rgba(10,26,49,.78);padding:22px clamp(14px,2.4vw,28px);min-width:0}
+.metric .num{font-size:clamp(1.8rem,3.6vw,2.7rem);font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:#fff}
+.metric .num.em{color:var(--emerald)}
+.metric .lbl{font-weight:700;font-size:.92rem;margin-top:2px}
+.metric .sub{font-size:.78rem;color:var(--on-navy-2);margin-top:2px}
+.metric-note{background:rgba(10,26,49,.78);border:1px solid rgba(255,255,255,.12);border-top:0;padding:9px 18px;font-size:.74rem;color:var(--on-navy-2);font-family:var(--font-mono)}
+@media (max-width:900px){.hero-grid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:640px){.metrics{grid-template-columns:minmax(0,1fr)}.metric{display:grid;grid-template-columns:auto 1fr;column-gap:16px;align-items:center}.metric .num{grid-row:span 2}}
+
+/* pipeline */
+.tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tab{display:grid;gap:4px;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:16px;transition:border-color .15s,box-shadow .15s;min-width:0}
+.tab .k{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.tab .t{font-weight:800;font-size:1.02rem;line-height:1.25}
+.tab:hover{border-color:var(--emerald-strong)}
+.tab[aria-selected="true"]{border-color:var(--emerald-strong);box-shadow:0 0 0 3px var(--emerald-soft),var(--shadow)}
+.tab[aria-selected="true"] .k{color:var(--emerald-ink)}
+.progress{height:6px;background:var(--line);border-radius:99px;margin:18px 0 22px;overflow:hidden}
+.progress i{display:block;height:100%;width:33.33%;background:linear-gradient(90deg,var(--emerald-strong),var(--emerald));border-radius:99px;transition:width .35s ease}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:clamp(20px,3.4vw,36px);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(20px,4vw,44px)}
+.panel h3{font-size:clamp(1.3rem,2.4vw,1.75rem);font-weight:800}
+.panel .desc{margin-top:12px;color:var(--ink-2)}
+.panel .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;padding:5px 10px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);white-space:nowrap}
+.pill.em{background:var(--emerald-soft);color:var(--emerald-ink)}
+.panel .next{margin-top:22px}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:12px;align-content:start}
+.checks li{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.checks .ok{width:22px;height:22px;border-radius:50%;background:var(--emerald-soft);color:var(--emerald-ink);display:grid;place-items:center;flex:none;margin-top:2px}
+.checks b{display:block;font-size:.95rem}
+.checks span{font-size:.86rem;color:var(--ink-2)}
+.gate{grid-column:1/-1;display:flex;gap:12px;align-items:center;background:var(--emerald-soft);color:var(--emerald-ink);border-radius:12px;padding:12px 16px;font-weight:700;font-size:.92rem}
+@media (max-width:820px){.tabs{grid-template-columns:minmax(0,1fr)}.panel{grid-template-columns:minmax(0,1fr)}}
+
+/* marketplace */
+.market{background:var(--surface-2)}
+.toolbar{display:grid;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:var(--shadow);margin-bottom:22px}
+.toolbar-row{display:flex;gap:12px;flex-wrap:wrap}
+.search{flex:1 1 260px;min-width:0;display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);border-radius:10px;padding:0 12px;background:var(--bg)}
+.search:focus-within{border-color:var(--emerald-strong)}
+.search input{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:inherit;padding:11px 0;outline:none}
+.sel{border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit;padding:10px 12px;min-width:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.fchip{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 13px;font-weight:700;font-size:.86rem}
+.fchip .n{font-family:var(--font-mono);font-size:.72rem;color:var(--ink-2)}
+.fchip:hover{border-color:var(--emerald-strong)}
+.fchip[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.fchip[aria-pressed="true"] .n{color:var(--emerald)}
+.result-line{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--ink-2);font-size:.88rem;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:20px}
+.cand{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.cand-head{display:flex;gap:12px;align-items:flex-start}
+.cand-head .who{min-width:0}
+.cand-head h3{font-size:1.08rem;font-weight:800;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.cand-head .tick{color:var(--emerald-strong);display:inline-flex}
+.cand-head p{font-size:.85rem;color:var(--ink-2)}
+.avail{margin-left:auto;font-size:.72rem;font-weight:700;color:var(--emerald-ink);background:var(--emerald-soft);padding:3px 9px;border-radius:999px;white-space:nowrap}
+.avail.later{color:var(--ink-2);background:var(--surface-2)}
+.vrow{display:flex;flex-wrap:wrap;gap:6px}
+.vtag{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;font-weight:700;color:var(--emerald-ink);background:var(--emerald-soft);padding:3px 8px;border-radius:6px}
+.bio{font-size:.9rem;color:var(--ink-2)}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-family:var(--font-mono);font-size:.74rem;font-weight:600;padding:3px 8px;border-radius:6px;background:var(--surface-2);color:var(--ink)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0}
+.stats div{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 10px;min-width:0}
+.stats dt{font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2);font-weight:700}
+.stats dd{margin:0;font-family:var(--font-mono);font-weight:600;font-size:1rem;font-variant-numeric:tabular-nums}
+.stats dd.good{color:var(--emerald-ink)}
+.featured{font-size:.82rem;color:var(--ink-2);border-left:3px solid var(--emerald);padding-left:10px}
+.featured b{color:var(--ink)}
+.links{display:flex;flex-wrap:wrap;gap:8px}
+.lnk{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:var(--surface);border-radius:8px;padding:6px 10px;font-size:.8rem;font-weight:700}
+.lnk:hover{border-color:var(--emerald-strong);color:var(--emerald-ink)}
+.cand-actions{display:flex;gap:8px;margin-top:auto;flex-wrap:wrap}
+.cand-actions .btn{flex:1 1 auto}
+.btn-navy{background:var(--navy);color:#fff}
+.btn-navy:hover{background:var(--navy-2)}
+.empty{grid-column:1/-1;text-align:center;border:1.5px dashed var(--line);border-radius:16px;padding:44px 20px;background:var(--surface)}
+.empty h3{font-size:1.15rem}
+.empty p{color:var(--ink-2);margin:8px 0 16px}
+.demo-note{margin-top:22px;font-size:.82rem;color:var(--ink-2);display:flex;gap:8px;align-items:flex-start}
+
+/* comparison */
+.cmp-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);background:var(--surface)}
+table.cmp{border-collapse:collapse;width:100%;min-width:720px}
+.cmp th,.cmp td{padding:16px 18px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);font-size:.93rem}
+.cmp thead th{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;font-family:var(--font-mono);position:sticky;top:0}
+.cmp thead th.bad{background:var(--danger-soft);color:var(--danger)}
+.cmp thead th.good{background:var(--emerald-soft);color:var(--emerald-ink)}
+.cmp tbody th{font-weight:800;width:20%;background:var(--bg)}
+.cmp tr:last-child th,.cmp tr:last-child td{border-bottom:0}
+.cmp td .row{display:flex;gap:10px;align-items:flex-start}
+.cmp td .m{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;flex:none;margin-top:1px}
+.cmp td.bad .m{background:var(--danger-soft);color:var(--danger)}
+.cmp td.good .m{background:var(--emerald-soft);color:var(--emerald-ink)}
+.cmp td.good{font-weight:600}
+
+/* trust */
+.trust{background:linear-gradient(180deg,var(--navy),var(--navy-2));color:var(--on-navy)}
+.trust .eyebrow{color:var(--emerald)}
+.trust .sec-head p{color:var(--on-navy-2)}
+.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.pillar{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:22px;display:grid;gap:14px;align-content:start;min-width:0}
+.pillar .ic{width:46px;height:46px;border-radius:12px;background:rgba(16,185,129,.16);color:var(--emerald);display:grid;place-items:center}
+.pillar h3{font-size:1.2rem;font-weight:800}
+.pillar p{color:var(--on-navy-2);font-size:.93rem}
+.pillar ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.pillar li{display:flex;gap:9px;font-size:.9rem;align-items:flex-start}
+.pillar li svg{color:var(--emerald);margin-top:3px}
+.ladder{margin-top:28px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.rung{border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:14px;background:rgba(0,0,0,.16);min-width:0}
+.rung .k{font-family:var(--font-mono);color:var(--emerald);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase}
+.rung b{display:block;margin-top:4px}
+.rung span{font-size:.84rem;color:var(--on-navy-2)}
+@media (max-width:900px){.pillars{grid-template-columns:minmax(0,1fr)}.ladder{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.ladder{grid-template-columns:minmax(0,1fr)}}
+
+/* employers */
+.emp-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,5vw,56px);align-items:start}
+.emp-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:clamp(20px,3vw,32px);display:grid;gap:18px}
+.emp-card h3{font-size:1.4rem;font-weight:800}
+.emp-card ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.emp-card li{display:flex;gap:10px;align-items:flex-start}
+.emp-card li svg{color:var(--emerald-strong);margin-top:4px}
+details.faq{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:0 16px}
+details.faq+details.faq{margin-top:10px}
+details.faq summary{cursor:pointer;padding:15px 0;font-weight:800;list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:center}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary::after{content:"+";font-family:var(--font-mono);color:var(--emerald-ink);font-size:1.2rem}
+details.faq[open] summary::after{content:"\2212"}
+details.faq p{padding-bottom:16px;color:var(--ink-2);font-size:.94rem}
+@media (max-width:860px){.emp-grid{grid-template-columns:minmax(0,1fr)}}
+
+footer{background:var(--navy);color:var(--on-navy-2);padding-block:36px;font-size:.86rem}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+.foot p{max-width:70ch}
+.foot .vbadge{align-self:flex-start}
+
+/* modal */
+.overlay{position:fixed;inset:0;z-index:100;background:rgba(5,12,24,.66);backdrop-filter:blur(3px);display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.dialog{background:var(--surface);color:var(--ink);width:100%;max-width:640px;border-radius:18px;box-shadow:var(--shadow-lg);margin-block:auto;position:relative;overflow:hidden}
+.dlg-head{display:flex;align-items:center;gap:12px;padding:18px 22px;border-bottom:1px solid var(--line)}
+.dlg-head h2{font-size:1.2rem;font-weight:800}
+.x{margin-left:auto;width:40px;height:40px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);display:grid;place-items:center}
+.x:hover{border-color:var(--emerald-strong)}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:6px;margin:18px 22px 0;background:var(--surface-2);border-radius:12px}
+.seg button{border:0;background:transparent;border-radius:8px;padding:10px;font-weight:800;font-size:.9rem;color:var(--ink-2)}
+.seg button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+form{padding:20px 22px 24px;display:grid;gap:14px}
+.fgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.field{display:grid;gap:6px;min-width:0}
+.field label,.field .lab{font-weight:700;font-size:.86rem}
+.field .req{color:var(--danger)}
+.field input,.field select,.field textarea{width:100%;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-size:.95rem;padding:10px 12px;border-radius:10px;min-width:0}
+.field textarea{resize:vertical;min-height:90px}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--emerald-strong);box-shadow:0 0 0 3px var(--emerald-soft)}
+.field.err input,.field.err select,.field.err textarea{border-color:var(--danger)}
+.field .msg{font-size:.78rem;color:var(--danger);min-height:0}
+.field .hint{font-size:.78rem;color:var(--ink-2)}
+.radios{display:flex;gap:8px;flex-wrap:wrap}
+.radios label{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line);border-radius:10px;padding:9px 12px;font-weight:700;font-size:.88rem;cursor:pointer;background:var(--bg)}
+.radios input{width:auto;accent-color:var(--emerald-strong)}
+.radios label:has(input:checked){border-color:var(--emerald-strong);background:var(--emerald-soft);color:var(--emerald-ink)}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:.86rem;color:var(--ink-2)}
+.check input{width:auto;margin-top:4px;accent-color:var(--emerald-strong)}
+.safe{display:flex;gap:10px;align-items:flex-start;background:var(--emerald-soft);color:var(--emerald-ink);border-radius:10px;padding:10px 12px;font-size:.84rem;font-weight:600}
+.form-foot{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+.success{padding:34px 22px 30px;text-align:center;display:grid;gap:14px;justify-items:center}
+.success .big{width:64px;height:64px;border-radius:50%;background:var(--emerald-soft);color:var(--emerald-ink);display:grid;place-items:center}
+.success h3{font-size:1.4rem;font-weight:800}
+.success p{color:var(--ink-2);max-width:46ch}
+.success .ref{font-family:var(--font-mono);background:var(--surface-2);padding:6px 12px;border-radius:8px;font-weight:600}
+@media (max-width:560px){.fgrid{grid-template-columns:minmax(0,1fr)}}
+
+.toast{position:fixed;left:50%;transform:translate(-50%,20px);bottom:max(20px,env(safe-area-inset-bottom,0px));z-index:200;background:var(--navy);color:#fff;border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:12px 16px;font-size:.88rem;font-weight:600;box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:min(92vw,460px);text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.2 8.2-8 9-4.8-.8-8-4.5-8-9V6l8-3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8.5 12l2.5 2.5L15.5 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 6l-3 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z M14 3v4h4 M9.5 12h5M9.5 16h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-repo" viewBox="0 0 24 24"><path d="M6 3h12v15H8a2 2 0 00-2 2V3z M6 20h12v-2 M10 7h5M10 10.5h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-live" viewBox="0 0 24 24"><path d="M3.5 5.5h17v13h-17z M3.5 9.5h17 M6.5 7.5h.01M9 7.5h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-in" viewBox="0 0 24 24"><path d="M4 4h16v16H4z M8 10.5V16 M8 7.6v.01 M12 16v-5.5 M12 12.5c.5-2.7 5-2.8 5 .5V16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 16l4.5 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8.5 10.5V8a3.5 3.5 0 017 0v2.5" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11v5.5M12 7.8v.01" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-pipe" viewBox="0 0 24 24"><path d="M4 6h5v5h6v7h5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="brand" href="#top" data-scroll aria-label="TalentPipeline Pakistan home">
+      <span class="brand-mark"><svg class="ico" width="20" height="20"><use href="#i-pipe"/></svg></span>
+      <span class="brand-name">TalentPipeline<small>PAKISTAN</small></span>
+    </a>
+    <span class="vbadge"><svg class="ico" width="14" height="14"><use href="#i-shield"/></svg>Verified Talent</span>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navPanel" aria-label="Open menu"><svg class="ico" width="22" height="22"><use href="#i-menu"/></svg></button>
+    <div class="nav-panel" id="navPanel">
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#how" data-scroll>How It Works</a>
+        <a href="#talent" data-scroll>Explore Talent</a>
+        <a href="#verification" data-scroll>Verification Standard</a>
+        <a href="#employers" data-scroll>For Employers</a>
+      </nav>
+      <div class="nav-cta">
+        <a class="btn btn-outline btn-sm" href="app.html">Open Platform Demo</a>
+        <button class="btn btn-primary btn-sm" data-open="candidate">Join Cohort (Candidates)</button>
+        <button class="btn btn-ghost btn-sm" data-open="employer">Hire Vetted Talent (Employers)</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero" aria-labelledby="h1">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="vbadge"><svg class="ico" width="14" height="14"><use href="#i-shield"/></svg>Zero candidate fees. Ever.</span>
+        <h1 id="h1" style="margin-top:18px">Bypass Predatory Agents. <span class="hl">Build Proof-of-Work.</span> Get Hired Globally.</h1>
+        <p class="lede">A three-stage pipeline that replaces recruitment middlemen with real skills: practical training, a public portfolio anyone can check, and a direct contract with an international employer.</p>
+        <div class="flow-chips" aria-label="Pipeline stages">
+          <span class="chip"><b>01</b>Applied Upskilling</span><span class="sep">&rarr;</span>
+          <span class="chip"><b>02</b>Verified Public Portfolio</span><span class="sep">&rarr;</span>
+          <span class="chip"><b>03</b>Direct International Placement</span>
+        </div>
+        <div class="hero-cta">
+          <button class="btn btn-primary btn-lg" data-open="candidate">Join Cohort <svg class="ico"><use href="#i-arrow"/></svg></button>
+          <a class="btn btn-ghost btn-lg" href="#talent" data-scroll>Explore Talent</a>
+        </div>
+      </div>
+      <aside class="passport" aria-label="Sample verified candidate passport">
+        <div class="pp-top">
+          <div class="avatar" aria-hidden="true">AM</div>
+          <div><h3>Ayesha Malik</h3><p>Full Stack Engineer &middot; Lahore</p></div>
+          <span class="pp-tag">Sample</span>
+        </div>
+        <ul class="pp-list">
+          <li><span class="ok"><svg class="ico" width="14" height="14"><use href="#i-check"/></svg></span>Identity verified<span class="val">CNIC checked</span></li>
+          <li><span class="ok"><svg class="ico" width="14" height="14"><use href="#i-check"/></svg></span>Degree verified<span class="val">issuer confirmed</span></li>
+          <li><span class="ok"><svg class="ico" width="14" height="14"><use href="#i-check"/></svg></span>Public GitHub<span class="val">14 repos</span></li>
+          <li><span class="ok"><svg class="ico" width="14" height="14"><use href="#i-check"/></svg></span>Live deployments<span class="val">3 apps online</span></li>
+          <li><span class="ok"><svg class="ico" width="14" height="14"><use href="#i-check"/></svg></span>Contract route<span class="val">Direct, no agent</span></li>
+        </ul>
+        <div class="pp-score"><div><strong>91</strong><span>/100</span></div><div class="bar" aria-hidden="true"><i></i></div><span>Code audit</span></div>
+      </aside>
+    </div>
+    <div class="metrics" role="list" aria-label="Platform metrics">
+      <div class="metric" role="listitem"><div class="num mono" data-count="2480" data-fmt="int">2,480</div><div><div class="lbl">Candidates Upskilled</div><div class="sub">across 14 completed cohorts</div></div></div>
+      <div class="metric" role="listitem"><div class="num mono" data-count="312" data-fmt="int">312</div><div><div class="lbl">Direct Hires Completed</div><div class="sub">signed with the employer, no agent</div></div></div>
+      <div class="metric" role="listitem"><div class="num mono em" data-count="1.19" data-fmt="money">$1.19M</div><div><div class="lbl">Fraud Fees Saved</div><div class="sub">$0 agent fees charged to candidates</div></div></div>
+    </div>
+    <div class="metric-note">Sample figures shown for demonstration. Replace with your live numbers before launch.</div>
+  </div>
+</section>
+
+<section class="band" id="how" aria-labelledby="how-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">The 3-stage pipeline</span>
+      <h2 id="how-h">From learner to contracted engineer, with receipts at every step</h2>
+      <p>Select a stage to see what happens, what you produce, and what has to be true before moving on.</p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Pipeline stages" id="stageTabs"></div>
+    <div class="progress" aria-hidden="true"><i id="stageBar"></i></div>
+    <div class="panel" role="tabpanel" id="stagePanel" aria-live="polite" tabindex="0"></div>
+  </div>
+</section>
+
+<section class="band market" id="talent" aria-labelledby="talent-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Employer talent marketplace</span>
+      <h2 id="talent-h">Vetted developers with work you can open and run</h2>
+      <p>Every profile links to public code, a live project and a LinkedIn page. Filter by domain, search by skill, then request an interview or start a direct hire.</p>
+    </div>
+    <div class="toolbar">
+      <div class="toolbar-row">
+        <label class="search"><svg class="ico" width="18" height="18"><use href="#i-search"/></svg><span class="sr" style="position:absolute;left:-9999px">Search talent</span><input id="q" type="search" placeholder="Search by name, role, skill or city (e.g. Flutter, React, Lahore)" autocomplete="off"></label>
+        <label><span style="position:absolute;left:-9999px">Sort by</span>
+        <select class="sel" id="sort" aria-label="Sort candidates">
+          <option value="audit">Sort: Code audit score</option>
+          <option value="apps">Sort: Live apps shipped</option>
+          <option value="name">Sort: Name A to Z</option>
+        </select></label>
+      </div>
+      <div class="chips" id="chips" role="group" aria-label="Filter by domain"></div>
+    </div>
+    <div class="result-line"><span id="count" aria-live="polite"></span><span>Every candidate shown has completed Stage 2.</span></div>
+    <div class="grid" id="grid"></div>
+    <p class="demo-note"><svg class="ico"><use href="#i-info"/></svg><span>Profiles, metrics and links on this page are simulated examples. In production each button opens the candidate's real public GitHub repository, deployment and LinkedIn page.</span></p>
+  </div>
+</section>
+
+<section class="band" id="compare" aria-labelledby="cmp-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Anti-scam comparison</span>
+      <h2 id="cmp-h">What a predatory agent does, and what TalentPipeline does instead</h2>
+      <p>Seven places where candidates get hurt in traditional overseas recruitment, and how the pipeline closes each one.</p>
+    </div>
+    <div class="cmp-scroll" tabindex="0" role="region" aria-label="Comparison table, scroll horizontally on small screens">
+      <table class="cmp">
+        <thead><tr><th scope="col">Risk area</th><th scope="col" class="bad">Traditional exploitation</th><th scope="col" class="good">TalentPipeline</th></tr></thead>
+        <tbody id="cmpBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="band trust" id="verification" aria-labelledby="ver-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Employer trust &amp; verification architecture</span>
+      <h2 id="ver-h">The Verification Standard every listed candidate passes</h2>
+      <p>Foreign employers should not have to take a CV on faith. Three independent checks run before a profile can go live, and each one leaves a record the employer can read.</p>
+    </div>
+    <div class="pillars">
+      <article class="pillar">
+        <div class="ic"><svg class="ico" width="24" height="24"><use href="#i-shield"/></svg></div>
+        <h3>Background verification</h3>
+        <p>Who the candidate is, and what they studied, confirmed against the source.</p>
+        <ul>
+          <li><svg class="ico" width="16" height="16"><use href="#i-check"/></svg>National ID matched against a live selfie check</li>
+          <li><svg class="ico" width="16" height="16"><use href="#i-check"/></svg>Degree confirmed directly with the issuing university</li>
+          <li><svg class="ico" width="16" height="16"><use href="#i-check"/></svg>Two professional or academic references contacted</li>
+          <li><svg class="ico" width="16" height="16"><use href="#i-check"/></svg>Public profile ownership proven by a signed commit</li>
+        </ul>
+      </article>
+      <article class="pillar">
+        <div class="ic"><svg class="ico" width="24" height="24"><use href="#i-code"/></svg></div>
+        <h3>Code quality audit</h3>
+        <p>Senior engineers review the work itself, not a certificate about the work.</p>
+        <ul>
+          <li><svg class="ico" width="16" height="16"><use href="#i-check"/></svg>Commit history checked for authorship and consistency</li>
+          <li><svg class="ico" width="16" height="16"><use href="#i-check"/></svg>Structure, tests, security basics and readability scored out of 100</li>
+          <li><svg class="ico" width="16" height="16"><use href="#i-check"/></svg>Live deployment opened and exercised by a reviewer</li>
+          <li><svg class="ico" width="16" height="16"><use href="#i-check"/></svg>A minimum score of 75 required to list</li>
+        </ul>
+      </article>
+      <article class="pillar">
+        <div class="ic"><svg class="ico" width="24" height="24"><use href="#i-doc"/></svg></div>
+        <h3>Secure legal contracts</h3>
+        <p>The agreement is between the employer and the candidate, with nobody in the middle.</p>
+        <ul>
+          <li><svg class="ico" width="16" height="16"><use href="#i-check"/></svg>Employer company registration and identity checked first</li>
+          <li><svg class="ico" width="16" height="16"><use href="#i-check"/></svg>Standard contract template reviewed by counsel in both countries</li>
+          <li><svg class="ico" width="16" height="16"><use href="#i-check"/></svg>Pay terms, notice period and IP ownership in writing</li>
+          <li><svg class="ico" width="16" height="16"><use href="#i-check"/></svg>Candidate keeps all original documents</li>
+        </ul>
+      </article>
+    </div>
+    <div class="ladder" aria-label="Verification record an employer receives">
+      <div class="rung"><div class="k">Record 1</div><b>Identity file</b><span>Check date, method and reviewer</span></div>
+      <div class="rung"><div class="k">Record 2</div><b>Audit report</b><span>Score breakdown and reviewer notes</span></div>
+      <div class="rung"><div class="k">Record 3</div><b>Portfolio snapshot</b><span>Repo and deploy state at review time</span></div>
+      <div class="rung"><div class="k">Record 4</div><b>Contract pack</b><span>Signed copies for both parties</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="employers" aria-labelledby="emp-h">
+  <div class="wrap">
+    <div class="emp-grid">
+      <div class="emp-card">
+        <span class="eyebrow">For employers</span>
+        <h3 id="emp-h">Hire from Pakistan without agencies, and without guessing</h3>
+        <ul>
+          <li><svg class="ico"><use href="#i-check"/></svg><span>Open the code and the live app before you ever book an interview.</span></li>
+          <li><svg class="ico"><use href="#i-check"/></svg><span>Contract the engineer directly and pay them directly, in your own currency and payroll.</span></li>
+          <li><svg class="ico"><use href="#i-check"/></svg><span>Receive the verification record for every candidate you shortlist.</span></li>
+          <li><svg class="ico"><use href="#i-check"/></svg><span>Post a hiring request and get a shortlist matched to your stack and time zone.</span></li>
+        </ul>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-primary" data-open="employer">Post a hiring request <svg class="ico"><use href="#i-arrow"/></svg></button>
+          <a class="btn btn-outline" href="#talent" data-scroll>Browse talent</a>
+        </div>
+      </div>
+      <div>
+        <div class="sec-head" style="margin-bottom:16px"><h2 style="font-size:1.5rem">Questions people ask first</h2></div>
+        <details class="faq"><summary>Do candidates ever pay anything?</summary><p>No. Candidates pay no registration, training, placement or document fee. The platform is funded by employer subscriptions. Anyone asking a candidate for money in our name should be reported.</p></details>
+        <details class="faq"><summary>Who signs the employment contract?</summary><p>The employer and the candidate sign directly. TalentPipeline supplies a reviewed template and verifies both parties, but it is not the employer and does not take a cut of salary.</p></details>
+        <details class="faq"><summary>How is code quality judged?</summary><p>Senior reviewers score each portfolio out of 100 on structure, tests, security basics and readability, and they open the live deployment. A score of 75 or more is needed to appear in the marketplace.</p></details>
+        <details class="faq"><summary>What happens to my documents?</summary><p>You keep your originals. Verification uses copies and direct checks with the issuing institution. We never hold a passport or original degree.</p></details>
+        <details class="faq"><summary>Can employers hire for remote work only?</summary><p>Yes. Remote contracts, relocation with employer-sponsored visas, and contract-to-hire are all supported. Visa sponsorship is always the employer's responsibility and is never charged to the candidate.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <a class="brand" href="#top" data-scroll style="margin-bottom:10px"><span class="brand-mark"><svg class="ico" width="20" height="20"><use href="#i-pipe"/></svg></span><span class="brand-name">TalentPipeline<small>PAKISTAN</small></span></a>
+      <p>Ethical direct hiring and upskilling for Pakistani engineers and designers. Demonstration build: the profiles, figures and links shown are placeholders, and form entries stay in this browser tab.</p>
+    </div>
+    <span class="vbadge"><svg class="ico" width="14" height="14"><use href="#i-shield"/></svg>Zero candidate fees</span>
+  </div>
+</footer>
+
+<!-- modal -->
+<div class="overlay" id="overlay" hidden>
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dlgTitle" id="dialog">
+    <div class="dlg-head">
+      <svg class="ico" width="22" height="22" style="color:var(--emerald-strong)"><use href="#i-shield"/></svg>
+      <h2 id="dlgTitle">Join a cohort</h2>
+      <button class="x" id="dlgClose" aria-label="Close dialog"><svg class="ico" width="18" height="18"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="seg" role="tablist" aria-label="Form type">
+      <button role="tab" id="segC" aria-selected="true" data-mode="candidate">I'm a candidate</button>
+      <button role="tab" id="segE" aria-selected="false" data-mode="employer">I'm an employer</button>
+    </div>
+
+    <form id="formC" novalidate aria-labelledby="dlgTitle">
+      <div class="safe"><svg class="ico" width="18" height="18"><use href="#i-lock"/></svg><span>Applying is free. We never ask candidates for money, and we never hold your original documents.</span></div>
+      <div class="fgrid">
+        <div class="field"><label for="c-name">Full name <span class="req">*</span></label><input id="c-name" name="name" autocomplete="name" placeholder="e.g. Hira Naveed"><span class="msg" id="c-name-m"></span></div>
+        <div class="field"><label for="c-email">Email <span class="req">*</span></label><input id="c-email" name="email" type="email" autocomplete="email" placeholder="you@example.com"><span class="msg" id="c-email-m"></span></div>
+        <div class="field"><label for="c-city">City</label><input id="c-city" name="city" placeholder="e.g. Rawalpindi"></div>
+        <div class="field"><label for="c-domain">Domain <span class="req">*</span></label>
+          <select id="c-domain" name="domain"><option value="">Choose a domain</option><option>Software Engineering</option><option>Flutter Dev</option><option>Web Dev</option><option>UI/UX</option><option>Data</option></select><span class="msg" id="c-domain-m"></span></div>
+        <div class="field"><label for="c-gh">GitHub profile <span class="req">*</span></label><input id="c-gh" name="github" inputmode="url" placeholder="github.com/your-handle"><span class="msg" id="c-gh-m"></span></div>
+        <div class="field"><label for="c-li">LinkedIn profile</label><input id="c-li" name="linkedin" inputmode="url" placeholder="linkedin.com/in/your-name"><span class="msg" id="c-li-m"></span></div>
+      </div>
+      <div class="field"><label for="c-level">Current level</label>
+        <select id="c-level" name="level"><option>Student / final year</option><option>Recent graduate</option><option>Working, upskilling on the side</option><option>Freelancer</option></select></div>
+      <div class="field"><label for="c-why">What do you want to build and where do you want to work?</label><textarea id="c-why" name="why" placeholder="Two or three lines is enough."></textarea></div>
+      <label class="check"><input type="checkbox" id="c-agree"><span>I understand that TalentPipeline charges candidates nothing and that my public profiles will be reviewed. <span class="req" style="color:var(--danger)">*</span></span></label>
+      <span class="msg" id="c-agree-m" style="font-size:.78rem;color:var(--danger)"></span>
+      <div class="form-foot"><button type="button" class="btn btn-outline" data-close>Cancel</button><button type="submit" class="btn btn-primary">Submit application</button></div>
+    </form>
+
+    <form id="formE" novalidate hidden aria-labelledby="dlgTitle">
+      <div class="safe"><svg class="ico" width="18" height="18"><use href="#i-lock"/></svg><span>Employers are verified before any candidate contact details are shared.</span></div>
+      <div class="field" id="e-pick" hidden><span class="lab">Candidate you selected</span><div class="pill em" id="e-pick-name" style="width:max-content;max-width:100%;white-space:normal"></div></div>
+      <div class="field"><span class="lab">What do you need?</span>
+        <div class="radios" role="radiogroup" aria-label="Request type">
+          <label><input type="radio" name="intent" value="Interview" checked>Request interview</label>
+          <label><input type="radio" name="intent" value="Direct hire">Direct hire</label>
+          <label><input type="radio" name="intent" value="Shortlist">Get a shortlist</label>
+        </div></div>
+      <div class="fgrid">
+        <div class="field"><label for="e-company">Company <span class="req">*</span></label><input id="e-company" name="company" autocomplete="organization" placeholder="Company name"><span class="msg" id="e-company-m"></span></div>
+        <div class="field"><label for="e-contact">Your name <span class="req">*</span></label><input id="e-contact" name="contact" autocomplete="name"><span class="msg" id="e-contact-m"></span></div>
+        <div class="field"><label for="e-email">Work email <span class="req">*</span></label><input id="e-email" name="email" type="email" autocomplete="email" placeholder="name@company.com"><span class="msg" id="e-email-m"></span></div>
+        <div class="field"><label for="e-country">Company country <span class="req">*</span></label><input id="e-country" name="country" placeholder="e.g. United Kingdom"><span class="msg" id="e-country-m"></span></div>
+        <div class="field"><label for="e-domain">Domain needed <span class="req">*</span></label>
+          <select id="e-domain" name="domain"><option value="">Choose a domain</option><option>Software Engineering</option><option>Flutter Dev</option><option>Web Dev</option><option>UI/UX</option><option>Data</option></select><span class="msg" id="e-domain-m"></span></div>
+        <div class="field"><label for="e-roles">Open roles</label><select id="e-roles" name="roles"><option>1</option><option>2 to 3</option><option>4 to 10</option><option>10+</option></select></div>
+      </div>
+      <div class="field"><label for="e-start">Target start</label><select id="e-start" name="start"><option>Within 2 weeks</option><option>Within 1 month</option><option>1 to 3 months</option><option>Just exploring</option></select></div>
+      <div class="field"><label for="e-msg">Role details</label><textarea id="e-msg" name="msg" placeholder="Stack, seniority, hours overlap, remote or relocation."></textarea></div>
+      <div class="form-foot"><button type="button" class="btn btn-outline" data-close>Cancel</button><button type="submit" class="btn btn-primary">Send request</button></div>
+    </form>
+
+    <div class="success" id="success" hidden>
+      <div class="big"><svg class="ico" width="32" height="32"><use href="#i-check"/></svg></div>
+      <h3 id="sucTitle">Application received</h3>
+      <p id="sucText"></p>
+      <span class="ref" id="sucRef"></span>
+      <button class="btn btn-primary" data-close>Done</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  "use strict";
+  var $=function(s,r){return (r||document).querySelector(s)};
+  var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function ic(n,s){s=s||16;return '<svg class="ico" width="'+s+'" height="'+s+'" aria-hidden="true"><use href="#i-'+n+'"/></svg>'}
+  function esc(t){return String(t).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+
+  /* ---------- data ---------- */
+  var STAGES=[
+    {k:"Stage 1",t:"Practical Upskilling & Cohort Training",dur:"8 to 12 weeks",fmt:"Live mentor-led cohort",
+     d:"Small cohorts learn by shipping. Each week ends with a working assignment that a mentor reviews line by line, so the habits employers care about are built early.",
+     items:[["Weekly shipped assignments","Every week produces something that runs, not a quiz."],["Mentor code reviews","Pull requests reviewed by working engineers."],["Git and team workflow","Branching, reviews, issues and release habits."],["Client communication","Written English, stand-ups and async updates."]],
+     gate:"To graduate: three reviewed projects merged and a mentor sign-off."},
+    {k:"Stage 2",t:"Proof-of-Work Build",dur:"4 to 6 weeks",fmt:"Public portfolio",
+     d:"Graduates turn their best work into evidence a stranger can verify: real repositories, a deployed app, and short case studies that explain the decisions behind the code.",
+     items:[["GitHub repositories","Readable code with an honest commit history."],["Live web or mobile app","Deployed, reachable and demo-ready."],["Case studies","Problem, approach, trade-offs and results in plain language."],["LinkedIn and profile page","One public identity that matches the work."]],
+     gate:"To list: a code quality audit score of 75/100 or higher."},
+    {k:"Stage 3",t:"Direct Employer Contracting & Document Verification",dur:"2 to 6 weeks",fmt:"Direct placement",
+     d:"Employers review the portfolio, interview the candidate and contract them directly. Identity and degree are verified at the source, and the candidate keeps every original document.",
+     items:[["Employer verification","Company registration and identity checked before contact."],["Interview and technical task","Run by the employer, scheduled through the platform."],["Direct written contract","Employer and candidate sign. No agent in the middle."],["Document verification","Checks go to the issuer, not through a broker."]],
+     gate:"Placement complete: signed contract, salary paid by the employer directly."}
+  ];
+
+  var DATA=[
+    {id:1,name:"Ayesha Malik",role:"Full Stack Engineer",city:"Lahore",domain:"Software Engineering",skills:["React","Node.js","PHP","MySQL"],bio:"Builds inventory and billing systems for small retailers. Comfortable owning a feature from schema to deploy.",repos:14,apps:3,audit:91,cohort:"Cohort 11",avail:"Available now",proj:["ShopSync","multi-vendor stock tracking, 1.2k test orders"],deg:"BS Computer Science"},
+    {id:2,name:"Hamza Qureshi",role:"Flutter Mobile Developer",city:"Islamabad",domain:"Flutter Dev",skills:["Dart/Flutter","Firebase","REST","Git"],bio:"Ships offline-first Android and iOS apps with clean state management and store-ready releases.",repos:9,apps:4,audit:88,cohort:"Cohort 12",avail:"Available now",proj:["RideSplit","fare-sharing app, 2 store releases"],deg:"BS Software Engineering"},
+    {id:3,name:"Sana Rehman",role:"Frontend Specialist",city:"Karachi",domain:"Web Dev",skills:["HTML","CSS","React","JavaScript"],bio:"Accessible, fast interfaces. Cares about layout details, keyboard support and Lighthouse scores.",repos:17,apps:5,audit:93,cohort:"Cohort 10",avail:"Available in 2 weeks",proj:["ClinicBook","booking UI, Lighthouse 98 on mobile"],deg:"BS Computer Science"},
+    {id:4,name:"Usman Tariq",role:"UI/UX Designer",city:"Lahore",domain:"UI/UX",skills:["Figma","HTML","CSS","Prototyping"],bio:"Designs and codes his own prototypes. Runs short usability tests and documents the findings.",repos:6,apps:3,audit:84,cohort:"Cohort 12",avail:"Available now",proj:["FeeWise","school fee app, tested with 12 parents"],deg:"BS Software Engineering"},
+    {id:5,name:"Fatima Zahra",role:"Data Analyst",city:"Islamabad",domain:"Data",skills:["Python","SQL","Pandas","Dashboards"],bio:"Turns messy spreadsheets into clean pipelines and dashboards that finance teams actually open.",repos:11,apps:2,audit:89,cohort:"Cohort 9",avail:"Available now",proj:["PriceWatch","scrapes and charts 40k price points weekly"],deg:"BS Data Science"},
+    {id:6,name:"Bilal Ahmed",role:"Backend Engineer",city:"Faisalabad",domain:"Software Engineering",skills:["PHP","Laravel","MySQL","Git"],bio:"Builds REST APIs with tests and clear docs. Strong on database design and background jobs.",repos:12,apps:3,audit:86,cohort:"Cohort 11",avail:"Available in 1 month",proj:["TextileTrack","order API serving a 3-factory pilot"],deg:"BS Computer Science"},
+    {id:7,name:"Zainab Iqbal",role:"Flutter Mobile Developer",city:"Peshawar",domain:"Flutter Dev",skills:["Dart/Flutter","REST","SQLite","Git"],bio:"Focuses on low-bandwidth apps with local storage and graceful sync when the network returns.",repos:8,apps:2,audit:82,cohort:"Cohort 12",avail:"Available now",proj:["FieldNotes","offline survey collector for 3 NGOs"],deg:"BS Software Engineering"},
+    {id:8,name:"Daniyal Shah",role:"Web Developer",city:"Rawalpindi",domain:"Web Dev",skills:["HTML","CSS","JavaScript","PHP"],bio:"Builds marketing sites and admin panels end to end, with sensible SEO and clean hand-off docs.",repos:10,apps:4,audit:80,cohort:"Cohort 10",avail:"Available now",proj:["PlotFinder","property listings site, 600 live listings"],deg:"BS Information Technology"},
+    {id:9,name:"Hira Naveed",role:"Python & Data Engineer",city:"Multan",domain:"Data",skills:["Python","Pandas","SQL","Git"],bio:"Writes reliable ETL jobs and explains results in plain language to non-technical teams.",repos:9,apps:2,audit:85,cohort:"Cohort 11",avail:"Available in 2 weeks",proj:["CropStats","yield reports from 5 years of open data"],deg:"BS Computer Science"}
+  ];
+  var DOMAINS=["All","Software Engineering","Flutter Dev","Web Dev","UI/UX","Data"];
+
+  var CMP=[
+    ["Fees for the candidate","Large upfront \"processing\", \"file\" or \"visa\" fees, often paid in cash.","Rs. 0. Candidates never pay for training, listing or placement."],
+    ["The job itself","Verbal promises, or an offer letter that changes after you pay.","A written contract signed directly with the named employer before any travel."],
+    ["Proof of skill","Padded CVs and invented experience that collapse at the first interview.","Public GitHub, live deployments and an audited code score anyone can check."],
+    ["Who the employer is","An unnamed \"client company\" you never get to speak to.","A verified, named employer you can interview and contact directly."],
+    ["Your documents","Agent holds your passport or original degree \"for processing\".","You keep every original. Checks go straight to the issuing institution."],
+    ["How you get paid","Salary routed through the agent, with deductions and no paperwork.","The employer pays your own bank account, and the contract states the amount."],
+    ["If something goes wrong","No office, no phone and no accountability once you have paid.","Every step is logged, and a report button reaches a real review team."]
+  ];
+
+  /* ---------- toast ---------- */
+  var toastEl=$("#toast"),toastT;
+  function toast(m){toastEl.textContent=m;toastEl.classList.add("show");clearTimeout(toastT);toastT=setTimeout(function(){toastEl.classList.remove("show")},3200)}
+
+  /* ---------- nav ---------- */
+  var menuBtn=$("#menuBtn"),navPanel=$("#navPanel");
+  function setMenu(o){navPanel.classList.toggle("open",o);menuBtn.setAttribute("aria-expanded",o?"true":"false");menuBtn.setAttribute("aria-label",o?"Close menu":"Open menu")}
+  menuBtn.addEventListener("click",function(){setMenu(!navPanel.classList.contains("open"))});
+  $$("[data-scroll]").forEach(function(a){
+    a.addEventListener("click",function(e){
+      var id=a.getAttribute("href").slice(1),t=document.getElementById(id);
+      if(!t)return;e.preventDefault();setMenu(false);
+      t.scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"});
+    });
+  });
+  if("IntersectionObserver" in window){
+    var links={};$$(".nav-links a").forEach(function(a){links[a.getAttribute("href").slice(1)]=a});
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){
+      var l=links[en.target.id];if(l&&en.isIntersecting){$$(".nav-links a").forEach(function(x){x.classList.remove("active")});l.classList.add("active")}
+    })},{rootMargin:"-45% 0px -50% 0px"});
+    ["how","talent","verification","employers"].forEach(function(id){var s=document.getElementById(id);if(s)io.observe(s)});
+  }
+
+  /* ---------- metrics count-up (final value is already in the markup) ---------- */
+  function fmt(v,type){if(type==="money")return "$"+v.toFixed(2)+"M";return Math.round(v).toLocaleString("en-US")}
+  if(!reduce){
+    $$("[data-count]").forEach(function(el){
+      var end=parseFloat(el.getAttribute("data-count")),type=el.getAttribute("data-fmt"),t0=null,dur=1400;
+      function step(ts){if(t0===null)t0=ts;var p=Math.min(1,(ts-t0)/dur),e=1-Math.pow(1-p,3);el.textContent=fmt(end*e,type);if(p<1)requestAnimationFrame(step);else el.textContent=fmt(end,type)}
+      el.textContent=fmt(0,type);requestAnimationFrame(step);
+    });
+  }
+
+  /* ---------- pipeline tabs ---------- */
+  var tabsEl=$("#stageTabs"),panelEl=$("#stagePanel"),barEl=$("#stageBar"),stageIdx=0;
+  tabsEl.innerHTML=STAGES.map(function(s,i){
+    return '<button role="tab" class="tab" id="tab'+i+'" aria-controls="stagePanel" aria-selected="'+(i===0)+'" tabindex="'+(i===0?0:-1)+'" data-i="'+i+'"><span class="k">'+s.k+'</span><span class="t">'+esc(s.t)+'</span></button>';
+  }).join("");
+  function showStage(i,focus){
+    stageIdx=i;var s=STAGES[i];
+    $$(".tab",tabsEl).forEach(function(b,j){b.setAttribute("aria-selected",j===i?"true":"false");b.tabIndex=j===i?0:-1;if(j===i&&focus)b.focus()});
+    barEl.style.width=((i+1)/STAGES.length*100)+"%";
+    panelEl.setAttribute("aria-labelledby","tab"+i);
+    panelEl.innerHTML='<div><span class="eyebrow">'+s.k+' of 3</span><h3 style="margin-top:8px">'+esc(s.t)+'</h3><p class="desc">'+esc(s.d)+'</p>'+
+      '<div class="meta"><span class="pill">'+esc(s.dur)+'</span><span class="pill em">'+ic("shield",14)+esc(s.fmt)+'</span></div>'+
+      '<div class="next">'+(i<STAGES.length-1?'<button class="btn btn-outline" data-next>Next: '+esc(STAGES[i+1].t.split(" &")[0])+' '+ic("arrow",16)+'</button>':'<button class="btn btn-primary" data-open="employer">Start a direct hire '+ic("arrow",16)+'</button>')+'</div></div>'+
+      '<ul class="checks">'+s.items.map(function(it){return '<li><span class="ok">'+ic("check",14)+'</span><div><b>'+esc(it[0])+'</b><span>'+esc(it[1])+'</span></div></li>'}).join("")+'</ul>'+
+      '<div class="gate">'+ic("shield",20)+esc(s.gate)+'</div>';
+    var nx=$("[data-next]",panelEl);if(nx)nx.addEventListener("click",function(){showStage(stageIdx+1,false)});
+    var op=$("[data-open]",panelEl);if(op)op.addEventListener("click",function(){openModal("employer")});
+  }
+  tabsEl.addEventListener("click",function(e){var b=e.target.closest(".tab");if(b)showStage(+b.dataset.i,false)});
+  tabsEl.addEventListener("keydown",function(e){
+    var k=e.key,n=STAGES.length,i=stageIdx;
+    if(k==="ArrowRight"||k==="ArrowDown")i=(i+1)%n;else if(k==="ArrowLeft"||k==="ArrowUp")i=(i-1+n)%n;else if(k==="Home")i=0;else if(k==="End")i=n-1;else return;
+    e.preventDefault();showStage(i,true);
+  });
+  showStage(0,false);
+
+  /* ---------- marketplace ---------- */
+  var state={domain:"All",q:"",sort:"audit"};
+  var chipsEl=$("#chips"),gridEl=$("#grid"),countEl=$("#count");
+  function renderChips(){
+    chipsEl.innerHTML=DOMAINS.map(function(d){
+      var n=d==="All"?DATA.length:DATA.filter(function(c){return c.domain===d}).length;
+      return '<button class="fchip" aria-pressed="'+(state.domain===d)+'" data-d="'+esc(d)+'">'+esc(d)+' <span class="n">'+n+'</span></button>';
+    }).join("");
+  }
+  function initials(n){return n.split(" ").map(function(p){return p[0]}).slice(0,2).join("")}
+  function match(c){
+    if(state.domain!=="All"&&c.domain!==state.domain)return false;
+    if(!state.q)return true;
+    var hay=(c.name+" "+c.role+" "+c.city+" "+c.domain+" "+c.skills.join(" ")).toLowerCase();
+    return state.q.toLowerCase().split(/\s+/).filter(Boolean).every(function(w){return hay.indexOf(w)>-1});
+  }
+  function card(c){
+    var later=c.avail.indexOf("now")===-1;
+    return '<article class="cand" aria-label="'+esc(c.name)+'">'+
+      '<div class="cand-head"><div class="avatar" aria-hidden="true">'+esc(initials(c.name))+'</div><div class="who"><h3>'+esc(c.name)+'<span class="tick" title="Identity and degree verified">'+ic("shield",18)+'</span></h3><p>'+esc(c.role)+' &middot; '+esc(c.city)+'</p></div><span class="avail'+(later?' later':'')+'">'+esc(c.avail)+'</span></div>'+
+      '<div class="vrow"><span class="vtag">'+ic("check",12)+'Identity verified</span><span class="vtag">'+ic("check",12)+'Degree verified</span><span class="vtag">'+ic("check",12)+'Code audited</span></div>'+
+      '<p class="bio">'+esc(c.bio)+'</p>'+
+      '<div class="tags">'+c.skills.map(function(s){return '<span class="tag">'+esc(s)+'</span>'}).join("")+'</div>'+
+      '<dl class="stats"><div><dt>Repos</dt><dd>'+c.repos+'</dd></div><div><dt>Live apps</dt><dd>'+c.apps+'</dd></div><div><dt>Audit</dt><dd class="good">'+c.audit+'/100</dd></div></dl>'+
+      '<p class="featured"><b>'+esc(c.proj[0])+'</b> &middot; '+esc(c.proj[1])+'</p>'+
+      '<div class="links"><button class="lnk" data-sim="GitHub repository" data-who="'+esc(c.name)+'">'+ic("repo",15)+'GitHub repo</button><button class="lnk" data-sim="live project demo" data-who="'+esc(c.name)+'">'+ic("live",15)+'Live demo</button><button class="lnk" data-sim="LinkedIn profile" data-who="'+esc(c.name)+'">'+ic("in",15)+'LinkedIn</button></div>'+
+      '<div class="cand-actions"><button class="btn btn-navy btn-sm" data-hire="'+c.id+'" data-intent="Interview">Request Interview</button><button class="btn btn-primary btn-sm" data-hire="'+c.id+'" data-intent="Direct hire">Direct Hire</button></div>'+
+    '</article>';
+  }
+  function renderGrid(){
+    var list=DATA.filter(match);
+    list.sort(function(a,b){if(state.sort==="name")return a.name.localeCompare(b.name);if(state.sort==="apps")return b.apps-a.apps||b.audit-a.audit;return b.audit-a.audit});
+    countEl.textContent="Showing "+list.length+" of "+DATA.length+" verified candidates"+(state.domain!=="All"?" in "+state.domain:"");
+    gridEl.innerHTML=list.length?list.map(card).join(""):
+      '<div class="empty"><h3>No candidates match that search</h3><p>Try a broader skill, or clear the filters. You can also post a hiring request and we will shortlist for you.</p><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn btn-outline" id="clearF">Clear filters</button><button class="btn btn-primary" data-open="employer">Post a hiring request</button></div></div>';
+    var cf=$("#clearF");if(cf)cf.addEventListener("click",function(){state.domain="All";state.q="";$("#q").value="";renderChips();renderGrid()});
+    var eo=$(".empty [data-open]",gridEl);if(eo)eo.addEventListener("click",function(){openModal("employer")});
+  }
+  chipsEl.addEventListener("click",function(e){var b=e.target.closest(".fchip");if(!b)return;state.domain=b.dataset.d;renderChips();renderGrid()});
+  $("#q").addEventListener("input",function(e){state.q=e.target.value.trim();renderGrid()});
+  $("#sort").addEventListener("change",function(e){state.sort=e.target.value;renderGrid()});
+  gridEl.addEventListener("click",function(e){
+    var s=e.target.closest("[data-sim]");
+    if(s){toast("Simulated link: in production this opens "+s.dataset.who.split(" ")[0]+"'s real "+s.dataset.sim+".");return}
+    var h=e.target.closest("[data-hire]");
+    if(h){var c=DATA.filter(function(x){return x.id===+h.dataset.hire})[0];openModal("employer",{cand:c,intent:h.dataset.intent})}
+  });
+  renderChips();renderGrid();
+
+  /* ---------- comparison ---------- */
+  $("#cmpBody").innerHTML=CMP.map(function(r){
+    return '<tr><th scope="row">'+esc(r[0])+'</th><td class="bad"><div class="row"><span class="m">'+ic("x",13)+'</span><span>'+esc(r[1])+'</span></div></td><td class="good"><div class="row"><span class="m">'+ic("check",13)+'</span><span>'+esc(r[2])+'</span></div></td></tr>';
+  }).join("");
+
+  /* ---------- modal ---------- */
+  var overlay=$("#overlay"),dialog=$("#dialog"),formC=$("#formC"),formE=$("#formE"),success=$("#success"),segC=$("#segC"),segE=$("#segE"),dlgTitle=$("#dlgTitle");
+  var lastFocus=null,mode="candidate";
+  function setMode(m){
+    mode=m;var isC=m==="candidate";
+    segC.setAttribute("aria-selected",isC);segE.setAttribute("aria-selected",!isC);
+    formC.hidden=!isC;formE.hidden=isC;success.hidden=true;
+    $(".seg").hidden=false;
+    dlgTitle.textContent=isC?"Join a cohort":"Request vetted talent";
+  }
+  function clearErrors(f){$$(".field.err",f).forEach(function(x){x.classList.remove("err")});$$(".msg",f).forEach(function(x){x.textContent=""});$$("[aria-invalid]",f).forEach(function(x){x.removeAttribute("aria-invalid")})}
+  function openModal(m,ctx){
+    lastFocus=document.activeElement;setMenu(false);
+    formC.reset();formE.reset();clearErrors(formC);clearErrors(formE);
+    setMode(m);
+    var pick=$("#e-pick");pick.hidden=true;
+    if(ctx&&ctx.cand){
+      pick.hidden=false;$("#e-pick-name").textContent=ctx.cand.name+" · "+ctx.cand.role+" · "+ctx.cand.city;
+      $("#e-domain").value=ctx.cand.domain;
+      var r=$$('input[name="intent"]',formE).filter(function(x){return x.value===ctx.intent})[0];if(r)r.checked=true;
+      formE.dataset.cand=ctx.cand.name;
+    }else{delete formE.dataset.cand}
+    overlay.hidden=false;document.body.classList.add("lock");
+    var first=$(m==="candidate"?"#c-name":"#e-company");setTimeout(function(){first.focus()},30);
+  }
+  function closeModal(){overlay.hidden=true;document.body.classList.remove("lock");if(lastFocus&&lastFocus.focus)lastFocus.focus()}
+  document.addEventListener("click",function(e){
+    var o=e.target.closest("[data-open]");
+    if(o&&!o.closest("#stagePanel")&&!o.closest(".empty")){openModal(o.dataset.open)}
+    if(e.target.closest("[data-close]")||e.target.closest("#dlgClose")||e.target===overlay)closeModal();
+  });
+  [segC,segE].forEach(function(b){b.addEventListener("click",function(){setMode(b.dataset.mode)})});
+  document.addEventListener("keydown",function(e){
+    if(overlay.hidden)return;
+    if(e.key==="Escape"){closeModal();return}
+    if(e.key==="Tab"){
+      var f=$$('button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])',dialog).filter(function(x){return !x.disabled&&x.offsetParent!==null});
+      if(!f.length)return;var a=f[0],z=f[f.length-1];
+      if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}
+      else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}
+    }
+  });
+
+  function setErr(id,msg){
+    var inp=document.getElementById(id),m=document.getElementById(id+"-m");
+    if(!inp||!m)return;var f=inp.closest(".field");
+    if(msg){f&&f.classList.add("err");m.textContent=msg;inp.setAttribute("aria-invalid","true");inp.setAttribute("aria-describedby",id+"-m")}
+    else{f&&f.classList.remove("err");m.textContent="";inp.removeAttribute("aria-invalid")}
+  }
+  var emailRe=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  function validC(){
+    var ok=true,firstBad=null;
+    function chk(id,cond,msg){var bad=!cond;setErr(id,bad?msg:"");if(bad){ok=false;if(!firstBad)firstBad=document.getElementById(id)}}
+    chk("c-name",$("#c-name").value.trim().length>=2,"Enter your full name.");
+    chk("c-email",emailRe.test($("#c-email").value.trim()),"Enter a valid email address.");
+    chk("c-domain",!!$("#c-domain").value,"Choose a domain.");
+    chk("c-gh",/^(https?:\/\/)?(www\.)?github\.com\/[A-Za-z0-9-]+/i.test($("#c-gh").value.trim()),"Enter a GitHub profile such as github.com/your-handle.");
+    var li=$("#c-li").value.trim();
+    chk("c-li",!li||/^(https?:\/\/)?([a-z]{2,3}\.)?linkedin\.com\/in\/[^\s]+/i.test(li),"Use a LinkedIn address like linkedin.com/in/your-name.");
+    var ag=$("#c-agree").checked;$("#c-agree-m").textContent=ag?"":"Please confirm to continue.";if(!ag){ok=false;if(!firstBad)firstBad=$("#c-agree")}
+    if(firstBad)firstBad.focus();return ok;
+  }
+  function validE(){
+    var ok=true,firstBad=null;
+    function chk(id,cond,msg){var bad=!cond;setErr(id,bad?msg:"");if(bad){ok=false;if(!firstBad)firstBad=document.getElementById(id)}}
+    chk("e-company",$("#e-company").value.trim().length>=2,"Enter your company name.");
+    chk("e-contact",$("#e-contact").value.trim().length>=2,"Enter your name.");
+    chk("e-email",emailRe.test($("#e-email").value.trim()),"Enter a valid work email.");
+    chk("e-country",$("#e-country").value.trim().length>=2,"Enter the company's country.");
+    chk("e-domain",!!$("#e-domain").value,"Choose a domain.");
+    if(firstBad)firstBad.focus();return ok;
+  }
+  function ref(){return "TPK-"+String(Math.floor(10000+Math.random()*89999))}
+  var submissions=[];
+  function done(title,text){
+    formC.hidden=true;formE.hidden=true;$(".seg").hidden=true;success.hidden=false;
+    dlgTitle.textContent="All set";$("#sucTitle").textContent=title;$("#sucText").textContent=text;$("#sucRef").textContent=ref();
+    $("button",success).focus();
+  }
+  formC.addEventListener("submit",function(e){
+    e.preventDefault();if(!validC())return;
+    submissions.push({type:"candidate",name:$("#c-name").value.trim(),domain:$("#c-domain").value});
+    done("Application received","Thanks, "+$("#c-name").value.trim().split(" ")[0]+". In a live build, a mentor would review your GitHub and invite you to the next cohort intake. This demo keeps your entry on this page only and sends nothing.");
+  });
+  formE.addEventListener("submit",function(e){
+    e.preventDefault();if(!validE())return;
+    var intent=$('input[name="intent"]:checked',formE).value,who=formE.dataset.cand;
+    submissions.push({type:"employer",company:$("#e-company").value.trim(),intent:intent});
+    done("Request received",(who?intent+" request for "+who+" noted for "+$("#e-company").value.trim()+". ":"Hiring request noted for "+$("#e-company").value.trim()+". ")+"In a live build, we would verify your company before sharing any candidate contact details. This demo sends nothing anywhere.");
+  });
+  [formC,formE].forEach(function(f){f.addEventListener("input",function(e){var t=e.target;if(t.id&&t.closest(".field.err"))setErr(t.id,"")})});
+})();
+</script>
+
+</body>
+</html>
